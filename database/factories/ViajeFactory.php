@@ -18,13 +18,13 @@ class ViajeFactory extends Factory
      */
     public function definition(): array
     {
-        $recorrido = $this->faker->optional()->randomFloat(2, 10, 500); // km recorridos
+        $recorrido = $this->faker->optional()->randomFloat(2, 10, 500); 
         $costoTotal = $recorrido ? $recorrido * $this->faker->randomFloat(2, 1000, 3000) : null;
 
         return [
-            'vehiculo_id' => Vehiculo::factory(),   // Crea un vehículo si no existe
-            'conductor_id' => Conductor::factory(), // Crea un conductor si no existe
-            'ruta_id' => Ruta::factory(),           // Crea una ruta si no existe
+            'vehiculo_id' => Vehiculo::inRandomOrder()->first()->id,   
+            'conductor_id' => Conductor::inRandomOrder()->first()->id, 
+            'ruta_id' => Ruta::inRandomOrder()->first()->id,            
             'descripcion' => $this->faker->optional()->sentence(8),
             'recorrido' => $recorrido,
             'tiempo_estimado' => $this->faker->dateTimeBetween('-1 month', '+1 month'),

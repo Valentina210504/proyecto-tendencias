@@ -18,8 +18,8 @@ class Conductor_LicenciaFactory extends Factory
     public function definition(): array
     {
         return [
-            'conductor_id' => Conductor::factory(), 
-            'licencia_id' => Licencia::factory(), 
+            'conductor_id' => Conductor::inRandomOrder()->first()->id, 
+            'licencia_id' => Licencia::inRandomOrder()->first()->id, 
             'fecha_asociacion' => $this->faker->dateTimeBetween('-5 years', 'now')->format('Y-m-d'),
             'estado_asociacion' => $this->faker->randomElement(['activa', 'inactiva', 'vencida']),
         ];

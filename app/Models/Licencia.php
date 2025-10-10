@@ -25,7 +25,7 @@ class Licencia extends Model
         'updated_at'   
     ];
     //relacion con Conductor_Licencia(uno a muchos)
-    public function conductores_licencias()
+    public function conductor_licencia()
     {
         return $this->hasMany(Conductor_Licencia::class, 'licencia_id');
     }

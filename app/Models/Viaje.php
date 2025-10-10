@@ -28,17 +28,17 @@ class Viaje extends Model
     ];
 
     //relacion con vehiculo(muchos a uno)
-    public function vehiculos()
+    public function vehiculo()
     {
-        return $this->belongsTo(Vehiculo::class, 'vehiculo_id');
+        return $this->belongsTo(Vehiculo::class);
     }
     //relacion con ruta(muchos a uno)
-    public function rutas()
+    public function ruta()
     {
-        return $this->belongsTo(Ruta::class, 'ruta_id');
+        return $this->belongsTo(Ruta::class);
     }
     //relacion con conductor(muchos a uno)
-    public function conductores()
+    public function conductor()
     {
         return $this->belongsTo(Conductor::class);
     }

@@ -26,7 +26,7 @@ class Tipo_Vehiculo extends Model
     ];
 
     //relacion con vehiculo(uno a muchos)
-    public function vehiculos()
+    public function vehiculo()
     {
         return $this->hasMany(Vehiculo::class, 'tipo_vehiculo_id');
     }

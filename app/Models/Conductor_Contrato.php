@@ -22,11 +22,11 @@ class Conductor_Contrato extends Model
         'updated_at'   
     ];
     //relacion con Conductor(Muchos a uno)
-    public function conductores() {
+    public function conductor() {
         return $this->belongsTo(Conductor::class);
     }
     //relacion con Contrato(Muchos a uno)
-    public function contratos() {
+    public function contrato() {
         return $this->belongsTo(Contrato::class);
     }
 }

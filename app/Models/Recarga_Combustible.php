@@ -25,7 +25,7 @@ class Recarga_Combustible extends Model
         'updated_at'   
     ];
     //relacion con vehiculo(muchos a uno)
-    public function vehiculos()
+    public function vehiculo()
     {
         return $this->belongsTo(Vehiculo::class);
     }

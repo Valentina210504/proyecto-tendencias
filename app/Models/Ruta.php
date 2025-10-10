@@ -26,7 +26,7 @@ class Ruta extends Model
     ];
 
     //relacion con viaje(uno a muchos)
-    public function viajes()
+    public function viaje()
     {
         return $this->hasMany(Viaje::class, 'ruta_id');
     }

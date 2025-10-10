@@ -23,7 +23,7 @@ protected $guarded=[ 'id',
 'updated_at'   
 ];
 //relacion con vehiculo(uno a muchos) 
-public function vehiculos()
+public function vehiculo()
 {
     return $this->hasMany(Vehiculo::class, 'marca_id');
 }

@@ -24,11 +24,11 @@ class Conductor_Licencia extends Model
     ];
     
     //relacion con Conductor(Muchos a uno)
-    public function conductores() {
+    public function conductor() {
         return $this->belongsTo(Conductor::class);
     }
     //relacion con Licencia(Muchos a uno)
-    public function licencias() {
+    public function licencia() {
         return $this->belongsTo(Licencia::class);
     }
 }

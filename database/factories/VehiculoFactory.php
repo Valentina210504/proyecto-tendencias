@@ -18,8 +18,8 @@ class VehiculoFactory extends Factory
     public function definition(): array
     {
         return [
-            'marca_id' => Marca::factory(),
-            'tipo_vehiculo_id' => Tipo_Vehiculo::factory(),
+            'marca_id' => Marca::inRandomOrder()->first()->id,
+            'tipo_vehiculo_id' => Tipo_Vehiculo::inRandomOrder()->first()->id,
             'placa' => strtoupper($this->faker->bothify('???-####')),
             'modelo' => $this->faker->word(),
             'año' => $this->faker->year(),

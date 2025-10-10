@@ -24,7 +24,7 @@ class Contrato extends Model
         'updated_at'   
     ];
     //relacion con Conductor_Contrato(uno a muchos)
-    public function conductores_contratos()
+    public function conductor_contrato()
     {
         return $this->hasMany(Conductor_Contrato::class, 'contrato_id');
     }

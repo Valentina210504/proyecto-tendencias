@@ -26,18 +26,18 @@ class Conductor extends Model
     ];
 
     //relacion con viaje(uno a muchos)
-    public function viajes()
+    public function viaje()
     {
         return $this->hasMany(Viaje::class, 'conductor_id');
     }
     //relacion con Conductor_Contrato(uno a muchos)
-    public function conductores_contratos()
+    public function conductor_contrato()
     {
         return $this->hasMany(Conductor_Contrato::class, 'conductor_id');
     }
 
     //relacion con  public function conductoresLicencias()
-        public function conductores_licencias()
+        public function conductor_licencia()
     {
         return $this->hasMany(Conductor_Licencia::class, 'conductor_id');
     }

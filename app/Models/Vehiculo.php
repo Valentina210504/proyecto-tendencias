@@ -28,23 +28,23 @@ class Vehiculo extends Model
     ];
 
     //relacion con marca(muchos a uno)
-    public function marcas()
+    public function marca()
     {
         return $this->belongsTo(Marca::class);
     }
     //relacion con tipo_vehiculo(muchos a uno)
-    public function tipo_vehiculos()
+    public function tipo_vehiculo()
     {
         return $this->belongsTo(Tipo_Vehiculo::class);   
     }
     
-    //relacion con viaje(uno a muchos)
-    public function viajes()
+    //relacion con viaje(uno a muchos) plural va hasMany
+    public function viaje()
     {
         return $this->hasMany(Viaje::class, 'vehiculo_id');   
     }
     //relacion con recarga_combustible(uno a muchos)
-    public function recarga_combustibles()
+    public function recarga_combustible()
     {
         return $this->hasMany(Recarga_Combustible::class, 'vehiculo_id');   
     }
