@@ -16,8 +16,8 @@ return new class extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_final')->nullable();
             $table->decimal('salario', 10, 2);
-            $table->boolean('estado')->default(true);
-            $table->unsignedBigInteger('registrado_por')->nullable();
+            $table->string('estado');
+            $table->string('registrado_por');
             $table->timestamps();
         });
     }

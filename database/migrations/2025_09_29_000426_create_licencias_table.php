@@ -18,8 +18,8 @@ return new class extends Migration
             $table->date('fecha_expedicion');
             $table->date('fecha_vencimiento');
             $table->string('entidad_emisora');
-            $table->boolean('estado')->default(true);
-            $table->unsignedBigInteger('registrado_por')->nullable();
+            $table->string('estado');
+            $table->string('registrado_por');
             $table->timestamps();
         });
     }

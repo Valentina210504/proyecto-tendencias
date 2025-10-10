@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('apellido');
             $table->string('documento')->unique();
             $table->date('fecha_contrato')->nullable();
-            $table->boolean('estado')->default(true);
-            $table->unsignedBigInteger('registrado_por')->nullable();
+            $table->string('estado');
+            $table->string('registrado_por');
             $table->timestamps();
         });
     }

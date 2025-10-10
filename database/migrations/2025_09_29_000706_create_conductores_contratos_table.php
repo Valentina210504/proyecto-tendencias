@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('conductor_id')->constrained('conductores');
             $table->foreignId('contrato_id')->constrained('contratos');
             $table->date('fecha_asignacion');
-            $table->boolean('estado_asignacion')->default(true);
+            $table->string('estado_asignacion');
             $table->timestamps();
         });
     }

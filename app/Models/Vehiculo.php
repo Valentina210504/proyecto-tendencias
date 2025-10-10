@@ -16,7 +16,7 @@ class Vehiculo extends Model
         'tipo_vehiculo_id',
         'placa',
         'modelo',
-        'anio',
+        'año',
         'color',
         'kilometraje',
         'estado',

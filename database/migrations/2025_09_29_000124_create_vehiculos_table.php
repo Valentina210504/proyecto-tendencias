@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('modelo');
             $table->year('año');
             $table->string('color');
-            $table->integer('kilometraje');
-            $table->boolean('estado')->default(true);
-            $table->unsignedBigInteger('registrado_por')->nullable();
+            $table->decimal('kilometraje', 10, 2)->default(0);
+            $table->string('estado');
+            $table->string('registrado_por');
             $table->timestamps();
         });
     }

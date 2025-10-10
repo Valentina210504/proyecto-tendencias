@@ -18,8 +18,8 @@ return new class extends Migration
         $table->decimal('distancia_en_km', 10, 2);
         $table->time('tiempo_estimado')->nullable();
         $table->decimal('costo_peaje', 10, 2)->nullable();
-        $table->boolean('estado')->default(true);
-        $table->unsignedBigInteger('registrado_por')->nullable();
+        $table->string('estado');
+        $table->string('registrado_por');
         $table->timestamps();
         });
     }

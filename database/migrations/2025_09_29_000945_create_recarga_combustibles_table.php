@@ -17,8 +17,8 @@ return new class extends Migration
             $table->decimal('precio_litro', 10, 2);
             $table->decimal('costo_total', 12, 2);
             $table->string('estacion_servicio');
-            $table->boolean('estado')->default(true);
-            $table->unsignedBigInteger('registrado_por')->nullable();
+            $table->string('estado');
+            $table->string('registrado_por');
             $table->timestamps();
         });
     }

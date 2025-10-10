@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('conductor_id')->constrained('conductores');
             $table->foreignId('licencia_id')->constrained('licencias');
-            $table->date('fecha_asignacion');
-            $table->boolean('estado_asignacion')->default(true);
+            $table->date('fecha_asociacion');
+            $table->string('estado_asociacion');
             $table->timestamps();
         });
     }
