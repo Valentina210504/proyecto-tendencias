@@ -1,10 +1,9 @@
-
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="https://static.vecteezy.com/system/resources/previews/010/048/208/non_2x/cat-monogram-letter-v-logo-designs-vector.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-            style="opacity: .8">
+        <img src="https://static.vecteezy.com/system/resources/previews/010/048/208/non_2x/cat-monogram-letter-v-logo-designs-vector.jpg"
+            alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
 
@@ -13,7 +12,8 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="https://i.pinimg.com/originals/48/f7/eb/48f7eb72134ebb24eaddf64adfae6dfa.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="https://i.pinimg.com/originals/48/f7/eb/48f7eb72134ebb24eaddf64adfae6dfa.jpg"
+                    class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">Valentina Prado Sarabia</a>
@@ -72,19 +72,83 @@
                         </li>
                     </ul>
                 </li>
-              
+
+
+                <!-- rutas de slidebar de mi proyecto -->
                 <li class="nav-item">
-                    <a href="pages/gallery.html" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>
-                            Gallery
-                        </p>
+                    <a href="{{route('conductores.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Conductores</p>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="{{route('contratos.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-paste"></i>
+                        <p>Contratos</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('empresas.index')}}" class="nav-link">
+                        <i class="nav-icon 	fas fa-building"></i>
+                        <p>Empresas</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('licencias.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-address-card"></i>
+                        <p>Licencias</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('marcas.index')}}" class="nav-link">
+                        <i class="nav-icon fab fa-delicious"></i>
+                        <p>Marcas</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('recarga_combustibles.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-gas-pump"></i>
+                        <p>Recarga Combustible</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('rutas.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-map-marked-alt"></i>
+                        <p>Rutas</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('tipo_vehiculos.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Tipo Vehiculos</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('vehiculos.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-car"></i>
+                        <p>Vehiculos</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('viajes.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-passport"></i>
+                        <p>Viajes</p>
+                    </a>
+                </li>
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
-    
+
     </div>
-    <!-- /.sidebar -->     
+    <!-- /.sidebar -->
 </aside>
