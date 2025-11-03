@@ -4,50 +4,57 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Marca;
+use Illuminate\Database\QueryException;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class MarcaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $marcas = Marca::all();
         return view('marcas.index', compact('marcas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('marcas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    
-    /**public function cambioestadomarca(Request $request)
+    public function store(Request $request)
     {
-        // $marca = Marca::find($request->id);
-        // $marca->estado = $request->estado;
-        // $marca->save(); 
-        
-        // primera forma
-        
-        /**$marca = new Marca();
-        $marca->nombre = $request->nombre;
-        $marca->pais_origen = $request->pais_origen;
-        $marca->estado = 1;
-        $marca->registradopor = $request->registradopor;
-        $marca->save();
-        
-
-        // segunda forma
-        $marca = Marca::create($request ->all());
-        return redirect()->route('marcas.index')->with('successMsg', 'Estado de la marca cambiado exitosamente.'   );
-    }**/
+        try {
+            $validated = $request->validate([
+                'nombre' => 'required|string|max:255',
+                'pais_origen' => 'required|string|max:255',
+                'estado' => 'required|boolean'
+            ]);
+            
+            $validated['registrado_por'] = auth()->user()->name;
+            
+            $marca = Marca::create($validated);
+            
+            return redirect()->route('marcas.index')
+                ->with('successMsg', 'Marca creada exitosamente.');
+                
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput();
+                
+        } catch (QueryException $e) {
+            Log::error('Error al crear la marca: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Error al crear la marca en la base de datos.')
+                ->withInput();
+                
+        } catch (\Exception $e) {
+            Log::error('Error inesperado al crear la marca: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Error inesperado al crear la marca.')
+                ->withInput();
+        }
+    }
 
     public function cambioestadomarca($id)
     {
@@ -60,35 +67,33 @@ class MarcaController extends Controller
             'nuevo_estado' => $marca->estado
         ]);
     }
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Marca $marca)
     {
-        //
+        try {
+            $marca->delete();
+            return redirect()->route('marcas.index')->with('successMsg', 'El registro se eliminó exitosamente');
+        } catch (QueryException $e) {
+            Log::error('Error al eliminar la marca: ' . $e->getMessage());
+            return redirect()->route('marcas.index')->withErrors('El registro que desea eliminar tiene información relacionada. Comuníquese con el Administrador');
+        } catch (Exception $e) {
+            Log::error('Error inesperado al eliminar la marca: ' . $e->getMessage());
+            return redirect()->route('marcas.index')->withErrors('Ocurrió un error inesperado al eliminar el registro. Comuníquese con el Administrador');
+        }
     }
 }

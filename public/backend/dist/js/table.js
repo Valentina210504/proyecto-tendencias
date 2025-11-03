@@ -7,7 +7,9 @@ class CustomDataTable {
     initializeDataTable() {
         $(this.id).DataTable({
             responsive: true,
-            lengthChange: true,
+            lengthChange: false,  //info
+            searching: false, //info
+            info: false, //info
             autoWidth: false,
             language: {
                 sLengthMenu: "Mostrar __MENU__ entradas",

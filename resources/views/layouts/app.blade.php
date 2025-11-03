@@ -146,9 +146,9 @@
     <!-- AdminLTE App -->
     <script src="{{asset('backend/dist/js/adminlte.js')}}"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="{{asset('backend/dist/js/demo.js')}}"></script>
+    <!-- <script src="{{asset('backend/dist/js/demo.js')}}"></script> -->
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{asset('backend/dist/js/pages/dashboard.js')}}"></script>
+    <!-- <script src="{{asset('backend/dist/js/pages/dashboard.js')}}"></script> -->
 
     <!-- estilos de data -->
     <script src="{{asset('backend/plugins/datatables/jquery.dataTables.min.js')}}"></script>
@@ -164,12 +164,10 @@
     <script src="{{asset('backend/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{asset('backend/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
-
-
     <!-- Sweetalert2 -->
     <script src="{{asset('backend/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
-    <!-- Bootstrap Toggle (debe ir antes de tus scripts personalizados) -->
+    <!-- Bootstrap Toggle COMENTADO -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.js"></script> -->
 
     <!-- Tus scripts -->
@@ -177,6 +175,7 @@
     <script src="{{asset('backend/dist/js/statuschange.js')}}"></script>
     <script src="{{asset('backend/dist/js/deleteConfirm.js')}}"></script>
 
+    @stack('scripts')
     @stack('scripts')
 </body>
 

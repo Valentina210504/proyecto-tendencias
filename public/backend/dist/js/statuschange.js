@@ -1,9 +1,7 @@
 ;(() => {
-  // Esperar a que el DOM y jQuery estén listos
   document.addEventListener("DOMContentLoaded", () => {
     console.log("[v0] DOM cargado")
 
-    // Verificar que jQuery esté disponible
     if (typeof window.$ === "undefined") {
       console.error("[v0] jQuery no está disponible")
       return
@@ -12,7 +10,6 @@
     const $ = window.$
     console.log("[v0] jQuery disponible")
 
-    // Verificar que el token CSRF esté disponible
     const csrfToken = $('meta[name="csrf-token"]').attr("content")
     if (!csrfToken) {
       console.error("[v0] Token CSRF no encontrado")
@@ -20,7 +17,6 @@
     }
     console.log("[v0] Token CSRF encontrado")
 
-    // Configurar AJAX para incluir el token CSRF en todas las peticiones
     $.ajaxSetup({
       headers: {
         "X-CSRF-TOKEN": csrfToken,
@@ -58,6 +54,9 @@
           break
         case "contratos":
           url = "/contratos/" + elementId + "/cambio-estado"
+          break
+        case "recarga_combustibles":
+          url = "/recarga_combustibles/" + elementId + "/cambio-estado"
           break
         default:
           console.error("[v0] Tipo de elemento no válido:", elementType)

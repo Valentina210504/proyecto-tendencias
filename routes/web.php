@@ -46,7 +46,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Route::get('cambioestadomarca', [MarcaController::class, 'cambioestadomarca'])->name('cambioestadomarca');
 // En routes/web.php
 Route::post('/marcas/{id}/cambio-estado', [MarcaController::class, 'cambioestadomarca'])->name('marcas.cambio-estado');
-
+Route::post('/recarga_combustibles/{id}/cambio-estado', [Recarga_CombustibleController::class, 'cambioestadorecarga_combustible'])->name('recarga_combustibles.cambio-estado');
 
 //usar http://127.0.0.1:8000/about para la ruta simple
 // Route::get('/about', function () {
