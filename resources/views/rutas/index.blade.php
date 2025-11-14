@@ -102,7 +102,7 @@
                                                 <span class="text-secondary">{{ $ruta->registrado_por }}</span>
                                             </td>
                                             <td class="text-center">
-                                                @if($ruta->estado)
+                                                @if($ruta->estado == 'activo')
                                                 <span class="badge badge-success px-3 py-2" style="cursor: pointer;"
                                                     title="Clic para cambiar estado">
                                                     <i class="fas fa-check-circle mr-1"></i> Activo
@@ -115,7 +115,7 @@
                                                 @endif
                                                 <input data-type="rutas" data-id="{{ $ruta->id }}"
                                                     class="toggle-class d-none" type="checkbox"
-                                                    {{ $ruta->estado ? 'checked' : '' }}>
+                                                    {{ $ruta->estado == 'activo' ? 'checked' : '' }}>
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-group" role="group">

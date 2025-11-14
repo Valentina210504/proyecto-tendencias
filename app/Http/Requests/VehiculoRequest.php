@@ -23,7 +23,7 @@ class VehiculoRequest extends FormRequest
         if ($this->isMethod('post')) {
             return [
                 'marca_id'          => 'required|exists:marcas,id',
-                'tipo_vehiculo_id'  => 'required|exists:tipo__vehiculos,id',
+                'tipo_vehiculo_id'  => 'required|exists:tipo_vehiculos,id',
                 'placa'             => 'required|string|max:10|unique:vehiculos,placa',
                 'modelo'            => 'required|string|max:255',
                 'año'               => 'required|integer|min:1900|max:' . date('Y'),
@@ -40,7 +40,7 @@ class VehiculoRequest extends FormRequest
 
             return [
                 'marca_id'          => 'required|exists:marcas,id',
-                'tipo_vehiculo_id'  => 'required|exists:tipo__vehiculos,id',
+                'tipo_vehiculo_id'  => 'required|exists:tipo_vehiculos,id',
                 'placa'             => 'required|string|max:10|unique:vehiculos,placa,' . $vehiculoId,
                 'modelo'            => 'required|string|max:255',
                 'año'               => 'required|integer|min:1900|max:' . date('Y'),

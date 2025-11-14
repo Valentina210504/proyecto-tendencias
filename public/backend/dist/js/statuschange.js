@@ -49,12 +49,7 @@
       // Determinar la URL según el tipo
       let url
         switch (elementType) {
-          case "marcas":
-            url = "/marcas/" + elementId + "/cambio-estado"
-            break
-          case "recarga_combustibles":
-            url = "/recarga_combustibles/" + elementId + "/cambio-estado"
-            break
+
           case "conductores": 
             url = "/conductores/" + elementId + "/cambio-estado"
             break
@@ -63,6 +58,27 @@
             break
           case "empresas":
             url = "/empresas/" + elementId + "/cambio-estado"
+            break
+          case "licencias":
+            url = "/licencias/" + elementId + "/cambio-estado"
+            break
+          case "marcas":
+            url = "/marcas/" + elementId + "/cambio-estado"
+            break
+          case "recarga_combustibles":
+            url = "/recarga_combustibles/" + elementId + "/cambio-estado"
+            break
+          case "rutas":
+            url = "/rutas/" + elementId + "/cambio-estado"
+            break
+          case "tipo_vehiculos":  
+            url = "/tipo_vehiculos/" + elementId + "/cambio-estado"
+            break
+          case "vehiculos":
+            url = "/vehiculos/" + elementId + "/cambio-estado"
+            break
+          case "viajes":
+            url = "/viajes/" + elementId + "/cambio-estado"
             break
           default:
             console.error("[v0] Tipo de elemento no válido:", elementType)

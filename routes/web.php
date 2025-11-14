@@ -52,10 +52,25 @@ Route::post('/rutas/{id}/cambio-estado', [RutaController::class, 'cambioestadoru
 Route::post('/tipo_vehiculos/{id}/cambio-estado', [Tipo_VehiculoController::class, 'cambioestadotipo_vehiculo'])->name('tipo_vehiculos.cambio-estado');
 Route::post('/vehiculos/{id}/cambio-estado', [VehiculoController::class, 'cambioestadovehiculo'])->name('vehiculos.cambio-estado');
 Route::post('/viajes/{id}/cambio-estado', [ViajeController::class, 'cambioestadoviaje'])->name('viajes.cambio-estado');
-
-
 Route::post('/marcas/{id}/cambio-estado', [MarcaController::class, 'cambioestadomarca'])->name('marcas.cambio-estado');
 Route::post('/recarga_combustibles/{id}/cambio-estado', [Recarga_CombustibleController::class, 'cambioestadorecarga_combustible'])->name('recarga_combustibles.cambio-estado');
+
+
+    Route::get('/probar404', function () {
+        abort(404);
+    });
+
+    Route::get('/probar500', function () {
+        abort(500);
+    });
+    Route::get('/probar403', function () {
+        abort(403);
+    });
+
+
+
+
+
 
 //usar http://127.0.0.1:8000/about para la ruta simple
 // Route::get('/about', function () {

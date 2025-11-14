@@ -28,7 +28,7 @@ class EmpresaController extends Controller
         return redirect()->route('empresas.index')->with('successMsg', 'Empresa creada con éxito');
     }
 
-    public function cambioestadomarca($id)
+    public function cambioestadoempresa($id)
     {
         $empresa = Empresa::findOrFail($id);
         $empresa->estado = !$empresa->estado;

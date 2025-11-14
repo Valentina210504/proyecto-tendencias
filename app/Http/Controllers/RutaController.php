@@ -39,13 +39,12 @@ class RutaController extends Controller
     {
         $ruta = Ruta::findOrFail($id);
         
-        // alternar entre activo/inactivo
         $ruta->estado = $ruta->estado === 'activo' ? 'inactivo' : 'activo';
         $ruta->save();
 
         return response()->json([
             'success' => true,
-            'nuevo_estado' => $ruta->estado
+            'nuevo_estado' => $ruta->estado === 'activo'  // ← Devuelve booleano
         ]);
     }
 

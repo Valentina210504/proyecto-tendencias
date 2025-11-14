@@ -28,7 +28,7 @@ class Tipo_VehiculoController extends Controller
         return redirect()->route('tipo_vehiculos.index')->with('successMsg', 'Tipo de Vehículo creado con éxito');
     }
 
-    public function cambioestadomarca($id)
+    public function cambioestadotipo_vehiculo($id)  
     {
         $tipo_vehiculo = Tipo_Vehiculo::findOrFail($id);
         $tipo_vehiculo->estado = !$tipo_vehiculo->estado;

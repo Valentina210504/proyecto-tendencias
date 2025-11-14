@@ -31,7 +31,22 @@ class ContratoController extends Controller
     public function cambioestadocontrato($id)
     {
         $contrato = Contrato::findOrFail($id);
-        $contrato->estado = !$contrato->estado;
+        
+        // Ciclo: activo → suspendido → finalizado → activo
+        switch ($contrato->estado) {
+            case 'activo':
+                $contrato->estado = 'suspendido';
+                break;
+            case 'suspendido':
+                $contrato->estado = 'finalizado';
+                break;
+            case 'finalizado':
+                $contrato->estado = 'activo';
+                break;
+            default:
+                $contrato->estado = 'activo';
+        }
+        
         $contrato->save();
 
         return response()->json([

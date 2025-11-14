@@ -88,21 +88,29 @@
                                                 <span
                                                     class="text-success font-weight-bold">${{ number_format($contrato->salario, 0, ',', '.') }}</span>
                                             </td>
+
                                             <td class="text-center">
                                                 @if($contrato->estado === 'activo')
-                                                <span class="badge badge-success px-3 py-2">
+                                                <span class="badge badge-success px-3 py-2" style="cursor: pointer;"
+                                                    title="Clic para cambiar estado">
                                                     <i class="fas fa-check-circle mr-1"></i> Activo
                                                 </span>
                                                 @elseif($contrato->estado === 'suspendido')
-                                                <span class="badge badge-warning px-3 py-2">
+                                                <span class="badge badge-warning px-3 py-2" style="cursor: pointer;"
+                                                    title="Clic para cambiar estado">
                                                     <i class="fas fa-pause-circle mr-1"></i> Suspendido
                                                 </span>
                                                 @else
-                                                <span class="badge badge-danger px-3 py-2">
+                                                <span class="badge badge-danger px-3 py-2" style="cursor: pointer;"
+                                                    title="Clic para cambiar estado">
                                                     <i class="fas fa-times-circle mr-1"></i> Finalizado
                                                 </span>
                                                 @endif
+                                                <input data-type="contratos" data-id="{{ $contrato->id }}"
+                                                    class="toggle-class d-none" type="checkbox"
+                                                    {{ $contrato->estado === 'activo' ? 'checked' : '' }}>
                                             </td>
+
                                             <td>
                                                 <span class="text-secondary">{{ $contrato->registrado_por }}</span>
                                             </td>
