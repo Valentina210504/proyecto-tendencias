@@ -28,7 +28,6 @@ Route::resource('viajes', ViajeController::class);
 
 
 
-    
  Route::get('/', function () {
     return view('welcome');
  });
@@ -45,6 +44,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Route::resource('marcas', MarcaController::class);
 //Route::get('cambioestadomarca', [MarcaController::class, 'cambioestadomarca'])->name('cambioestadomarca');
 // En routes/web.php
+Route::post('/conductores/{id}/cambio-estado', [ConductorController::class, 'cambioestadoconductor'])->name('conductores.cambio-estado');
+Route::post('/contratos/{id}/cambio-estado', [ContratoController::class, 'cambioestadocontrato'])->name('contratos.cambio-estado');
+Route::post('/empresas/{id}/cambio-estado', [EmpresaController::class, 'cambioestadoempresa'])->name('empresas.cambio-estado');
+Route::post('/licencias/{id}/cambio-estado', [LicenciaController::class, 'cambioestadolicencia'])->name('licencias.cambio-estado');
+Route::post('/rutas/{id}/cambio-estado', [RutaController::class, 'cambioestadoruta'])->name('rutas.cambio-estado');
+Route::post('/tipo_vehiculos/{id}/cambio-estado', [Tipo_VehiculoController::class, 'cambioestadotipo_vehiculo'])->name('tipo_vehiculos.cambio-estado');
+Route::post('/vehiculos/{id}/cambio-estado', [VehiculoController::class, 'cambioestadovehiculo'])->name('vehiculos.cambio-estado');
+Route::post('/viajes/{id}/cambio-estado', [ViajeController::class, 'cambioestadoviaje'])->name('viajes.cambio-estado');
+
+
 Route::post('/marcas/{id}/cambio-estado', [MarcaController::class, 'cambioestadomarca'])->name('marcas.cambio-estado');
 Route::post('/recarga_combustibles/{id}/cambio-estado', [Recarga_CombustibleController::class, 'cambioestadorecarga_combustible'])->name('recarga_combustibles.cambio-estado');
 

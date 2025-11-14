@@ -128,35 +128,4 @@
 </div>
 
 
-<!-- <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchTable');
-    const table = document.getElementById('example1');
-    const tbody = table.querySelector('tbody');
-    const rows = tbody.querySelectorAll('tr');
-
-    searchInput.addEventListener('keyup', function() {
-        const searchTerm = this.value.toLowerCase().trim();
-
-        rows.forEach(function(row) {
-            const nombre = row.cells[1].textContent.toLowerCase();
-            const registradoPor = row.cells[2].textContent.toLowerCase();
-            const paisOrigen = row.cells[3].textContent.toLowerCase();
-            const id = row.cells[0].textContent.toLowerCase();
-
-            // Buscar en todas las columnas relevantes
-            if (nombre.includes(searchTerm) ||
-                registradoPor.includes(searchTerm) ||
-                paisOrigen.includes(searchTerm) ||
-                id.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-});
-</script> -->
-
-
 @endsection

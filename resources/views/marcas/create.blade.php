@@ -54,6 +54,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                         <div class="form-group label-floating">
@@ -66,7 +67,11 @@
                                     </div>
                                 </div>
                                 <input type="hidden" class="form-control" name="estado" value="1">
-                                {{-- Eliminado campo registrado_por porque ahora se asigna automáticamente en el controlador --}}
+                                <input type="hidden" class="form-control" name="registrado_por"
+                                    value="{{ Auth::user()->name }}">
+
+                                <!-- <input type="hidden" class="form-control" name="estado" value="1">
+                                {{-- Eliminado campo registrado_por porque ahora se asigna automáticamente en el controlador --}} -->
                             </div>
                             <div class="card-footer">
                                 <div class="row">

@@ -7,6 +7,7 @@ use App\Models\Marca;
 use Illuminate\Database\QueryException;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\MarcaRequest;
 
 class MarcaController extends Controller
 {
@@ -21,39 +22,10 @@ class MarcaController extends Controller
         return view('marcas.create');
     }
 
-    public function store(Request $request)
+    public function store(MarcaRequest $request)
     {
-        try {
-            $validated = $request->validate([
-                'nombre' => 'required|string|max:255',
-                'pais_origen' => 'required|string|max:255',
-                'estado' => 'required|boolean'
-            ]);
-            
-            $validated['registrado_por'] = auth()->user()->name;
-            
-            $marca = Marca::create($validated);
-            
-            return redirect()->route('marcas.index')
-                ->with('successMsg', 'Marca creada exitosamente.');
-                
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return redirect()->back()
-                ->withErrors($e->errors())
-                ->withInput();
-                
-        } catch (QueryException $e) {
-            Log::error('Error al crear la marca: ' . $e->getMessage());
-            return redirect()->back()
-                ->with('error', 'Error al crear la marca en la base de datos.')
-                ->withInput();
-                
-        } catch (\Exception $e) {
-            Log::error('Error inesperado al crear la marca: ' . $e->getMessage());
-            return redirect()->back()
-                ->with('error', 'Error inesperado al crear la marca.')
-                ->withInput();
-        }
+        $marca = Marca::create($request->all());
+        return redirect()->route('marcas.index')->with('successMsg', 'Marca creada con exito');
     }
 
     public function cambioestadomarca($id)
@@ -97,3 +69,36 @@ class MarcaController extends Controller
         }
     }
 }
+
+
+        // try {
+        //     $validated = $request->validate([
+        //         'nombre' => 'required|string|max:255',
+        //         'pais_origen' => 'required|string|max:255',
+        //         'estado' => 'required|boolean'
+        //     ]);
+            
+        //     $validated['registrado_por'] = auth()->user()->name;
+            
+        //     $marca = Marca::create($validated);
+            
+        //     return redirect()->route('marcas.index')
+        //         ->with('successMsg', 'Marca creada exitosamente.');
+                
+        // } catch (\Illuminate\Validation\ValidationException $e) {
+        //     return redirect()->back()
+        //         ->withErrors($e->errors())
+        //         ->withInput();
+                
+        // } catch (QueryException $e) {
+        //     Log::error('Error al crear la marca: ' . $e->getMessage());
+        //     return redirect()->back()
+        //         ->with('error', 'Error al crear la marca en la base de datos.')
+        //         ->withInput();
+                
+        // } catch (\Exception $e) {
+        //     Log::error('Error inesperado al crear la marca: ' . $e->getMessage());
+        //     return redirect()->back()
+        //         ->with('error', 'Error inesperado al crear la marca.')
+        //         ->withInput();
+        // }

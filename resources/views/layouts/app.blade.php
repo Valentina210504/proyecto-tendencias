@@ -52,6 +52,10 @@
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{asset('backend/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
 
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{asset('backend/plugins/select2/css/select2.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/plugins/select2/css/select2.css')}}">
 </head>
 
 <body class=" hold-transition sidebar-mini layout-fixed">
@@ -174,9 +178,13 @@
     <script src="{{asset('backend/dist/js/table.js')}}"></script>
     <script src="{{asset('backend/dist/js/statuschange.js')}}"></script>
     <script src="{{asset('backend/dist/js/deleteConfirm.js')}}"></script>
+    <script src="{{ asset('backend/dist/js/searchTable.js') }}"></script>
 
-    @stack('scripts')
-    @stack('scripts')
-</body>
 
-</html>
+
+    <!-- selector -->
+    <script src="{{asset('backend/dist/js/selectors.js')}}"></script>
+    @stack('scripts')
+    @stack('scripts') < /body>
+
+        < /html>

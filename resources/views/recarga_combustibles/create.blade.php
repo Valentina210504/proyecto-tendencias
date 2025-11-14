@@ -86,8 +86,10 @@
                                     </div>
                                 </div>
 
-                                <input type="hidden" class="form-control" name="estado" value="activo">
-                                {{-- El campo registrado_por se asigna automáticamente en el controlador --}}
+                                <input type="hidden" class="form-control" name="estado" value="1">
+                                <input type="hidden" class="form-control" name="registrado_por"
+                                    value="{{ Auth::user()->name }}">
+
                             </div>
                             <div class="card-footer">
                                 <div class="row">

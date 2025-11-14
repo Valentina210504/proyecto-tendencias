@@ -4,65 +4,68 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Conductor;
+use Illuminate\Database\QueryException;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\ConductorRequest;
 
 class ConductorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //$ = identificar variable en laravel
-        $conductores = Conductor::all(); // Obtener todos los conductores desde el modelo,controlador se comunica con el modelo
-        return view('conductores.index', compact('conductores')); //crear un directorio dentro de views llamado conductores y un archivo index.blade.php
-        //en el comact se pasan las variables a la vista
+        $conductores = Conductor::all();
+        return view('conductores.index', compact('conductores'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('conductores.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(ConductorRequest $request)
     {
-        //
+        $conductor = Conductor::create($request->all());
+        return redirect()->route('conductores.index')->with('successMsg', 'Conductor creado con éxito');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function cambioestadoconductor($id)
+    {
+        $conductor = Conductor::findOrFail($id);
+        $conductor->estado = !$conductor->estado;
+        $conductor->save();
+
+        return response()->json([
+            'success' => true,
+            'nuevo_estado' => $conductor->estado
+        ]);
+    }
+
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(ConductorRequest $request, string $id)
     {
-        //
-    }
+       //
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Conductor $conductor)
     {
-        //
+        try {
+            $conductor->delete();
+            return redirect()->route('conductores.index')->with('successMsg', 'El registro se eliminó exitosamente');
+        } catch (QueryException $e) {
+            Log::error('Error al eliminar el conductor: ' . $e->getMessage());
+            return redirect()->route('conductores.index')->withErrors('El registro que desea eliminar tiene información relacionada. Comuníquese con el Administrador');
+        } catch (Exception $e) {
+            Log::error('Error inesperado al eliminar el conductor: ' . $e->getMessage());
+            return redirect()->route('conductores.index')->withErrors('Ocurrió un error inesperado al eliminar el registro. Comuníquese con el Administrador');
+        }
     }
 }

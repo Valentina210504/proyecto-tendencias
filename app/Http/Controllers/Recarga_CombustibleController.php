@@ -7,6 +7,7 @@ use App\Models\Recarga_Combustible;
 use Illuminate\Database\QueryException;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\Recarga_CombustibleRequest;
 
 class Recarga_CombustibleController extends Controller
 {
@@ -21,41 +22,10 @@ class Recarga_CombustibleController extends Controller
         return view('recarga_combustibles.create');
     }
 
-    public function store(Request $request)
+    public function store(Recarga_CombustibleRequest $request)
     {
-        try {
-            $validated = $request->validate([
-                'cantidad_litros' => 'required|string|max:255',
-                'precio_litro' => 'required|string|max:255',
-                'costo_total' => 'required|string|max:255',
-                'estacion_servicio' => 'required|string|max:255',
-                'estado' => 'required|string|in:activo,inactivo'
-            ]);
-            
-            $validated['registrado_por'] = auth()->user()->name;
-            
-            $recarga_combustible = Recarga_Combustible::create($validated);
-            
-            return redirect()->route('recarga_combustibles.index')
-                ->with('successMsg', 'Recarga_Combustible creada exitosamente.');
-                
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return redirect()->back()
-                ->withErrors($e->errors())
-                ->withInput();
-                
-        } catch (QueryException $e) {
-            Log::error('Error al crear la recarga comburtible: ' . $e->getMessage());
-            return redirect()->back()
-                ->with('error', 'Error al crear la recarga combustible en la base de datos.')
-                ->withInput();
-                
-        } catch (\Exception $e) {
-            Log::error('Error inesperado al crear la recarga combustible: ' . $e->getMessage());
-            return redirect()->back()
-                ->with('error', 'Error inesperado al crear la recarga combustible')
-                ->withInput();
-        }
+        $recarga_combustible = Recarga_Combustible::create($request->all());
+        return redirect()->route('recarga_combustibles.index')->with('successMsg', 'Recarga Combustible creada con exito');
     }
 
 public function cambioestadorecarga_combustible($id)

@@ -48,20 +48,27 @@
 
       // Determinar la URL según el tipo
       let url
-      switch (elementType) {
-        case "marcas":
-          url = "/marcas/" + elementId + "/cambio-estado"
-          break
-        case "contratos":
-          url = "/contratos/" + elementId + "/cambio-estado"
-          break
-        case "recarga_combustibles":
-          url = "/recarga_combustibles/" + elementId + "/cambio-estado"
-          break
-        default:
-          console.error("[v0] Tipo de elemento no válido:", elementType)
-          return
-      }
+        switch (elementType) {
+          case "marcas":
+            url = "/marcas/" + elementId + "/cambio-estado"
+            break
+          case "recarga_combustibles":
+            url = "/recarga_combustibles/" + elementId + "/cambio-estado"
+            break
+          case "conductores": 
+            url = "/conductores/" + elementId + "/cambio-estado"
+            break
+          case "contratos":
+            url = "/contratos/" + elementId + "/cambio-estado"
+            break
+          case "empresas":
+            url = "/empresas/" + elementId + "/cambio-estado"
+            break
+          default:
+            console.error("[v0] Tipo de elemento no válido:", elementType)
+            return
+        }
+
 
       console.log("[v0] URL de petición:", url)
 
