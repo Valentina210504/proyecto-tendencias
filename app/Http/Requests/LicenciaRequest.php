@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class LicenciaRequest extends FormRequest
 {
     /**
-     * Determina si el usuario está autorizado a realizar esta solicitud.
+     * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
@@ -15,34 +15,33 @@ class LicenciaRequest extends FormRequest
     }
 
     /**
-     * Reglas de validación según el método (POST o PUT/PATCH)
+     * Get the validation rules that apply to the request.
      */
     public function rules(): array
     {
-    //     if ($this->isMethod('post')) {
-    //         return [
-    //             'numero_licencia'   => 'required|string|max:50|unique:licencias,numero_licencia',
-    //             'tipo_licencia'     => 'required|string|max:100',
-    //             'fecha_expedicion'  => 'required|date',
-    //             'fecha_vencimiento' => 'required|date|after:fecha_expedicion',
-    //             'entidad_emisora'   => 'required|string|max:150',
-    //             'estado'            => 'required|boolean',
-    //             'registrado_por'    => 'nullable|string|max:255',
-    //         ];
-    //     } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
-    //         $licenciaId = $this->route('licencia'); // obtiene el ID de la ruta
+        if (request()->isMethod('post')) {
 
-    //         return [
-    //             'numero_licencia'   => 'required|string|max:50|unique:licencias,numero_licencia,' . $licenciaId,
-    //             'tipo_licencia'     => 'required|string|max:100',
-    //             'fecha_expedicion'  => 'required|date',
-    //             'fecha_vencimiento' => 'required|date|after:fecha_expedicion',
-    //             'entidad_emisora'   => 'required|string|max:150',
-    //             'estado'            => 'required|boolean',
-    //             'registrado_por'    => 'nullable|string|max:255',
-    //         ];
-    //     }
+            return [
+                'numero_licencia'     => 'required|string|max:255|unique:licencias,numero_licencia',
+                'tipo_licencia'       => 'required|string|in:A1,A2,B1,B2,C1,C2',
+                'fecha_expedicion'    => 'required|date',
+                'fecha_vencimiento'   => 'required|date|after:fecha_expedicion',
+                'entidad_emisora'     => 'required|string|max:255',
+                'estado' => 'required|boolean'
+            ];
 
-       
-     }
+        } elseif (request()->isMethod('put') || request()->isMethod('patch')) {
+
+            $licenciaId = $this->route('licencia');
+
+            return [
+                'numero_licencia'     => 'required|string|max:255|unique:licencias,numero_licencia,' . $licenciaId,
+                'tipo_licencia'       => 'required|string|in:A1,A2,B1,B2,C1,C2',
+                'fecha_expedicion'    => 'required|date',
+                'fecha_vencimiento'   => 'required|date|after:fecha_expedicion',
+                'entidad_emisora'     => 'required|string|max:255',
+                'estado' => 'required|boolean'
+            ];
+        }
+    }
 }

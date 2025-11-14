@@ -4,63 +4,72 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contrato;
+use Illuminate\Database\QueryException;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\ContratoRequest;
 
 class ContratoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $contratos = Contrato::all();
         return view('contratos.index', compact('contratos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('contratos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(ContratoRequest $request)
     {
-        //
+        $contrato = Contrato::create($request->all());
+        return redirect()->route('contratos.index')->with('successMsg', 'Contrato creado con éxito');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function cambioestadocontrato($id)
+    {
+        $contrato = Contrato::findOrFail($id);
+        $contrato->estado = !$contrato->estado;
+        $contrato->save();
+
+        return response()->json([
+            'success' => true,
+            'nuevo_estado' => $contrato->estado
+        ]);
+    }
+
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Contrato $contrato)
     {
-        //
+        try {
+            $contrato->delete();
+            return redirect()->route('contratos.index')->with('successMsg', 'El contrato se eliminó exitosamente');
+
+        } catch (QueryException $e) {
+            Log::error('Error al eliminar el contrato: ' . $e->getMessage());
+            return redirect()->route('contratos.index')
+                ->withErrors('El contrato que desea eliminar tiene información relacionada. Comuníquese con el Administrador');
+
+        } catch (Exception $e) {
+            Log::error('Error inesperado al eliminar el contrato: ' . $e->getMessage());
+            return redirect()->route('contratos.index')
+                ->withErrors('Ocurrió un error inesperado al eliminar el contrato. Comuníquese con el Administrador');
+        }
     }
 }

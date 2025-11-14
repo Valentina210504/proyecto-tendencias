@@ -4,63 +4,66 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Vehiculo;
+use App\Models\Marca;
+use App\Models\Tipo_Vehiculo;
+use Illuminate\Database\QueryException;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\VehiculoRequest;
 
 class VehiculoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $vehiculos = Vehiculo::all();
         return view('vehiculos.index', compact('vehiculos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+    $marcas = Marca::all();
+    $tipos = Tipo_Vehiculo::all();
+
+    return view('vehiculos.create', compact('marcas', 'tipos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(VehiculoRequest $request)
     {
-        //
+        Vehiculo::create($request->all());
+
+        return redirect()->route('vehiculos.index')
+            ->with('successMsg', 'Vehículo creado con éxito');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function cambioestadovehiculo($id)
     {
-        //
+        $vehiculo = Vehiculo::findOrFail($id);
+
+        $vehiculo->estado = !$vehiculo->estado;
+        $vehiculo->save();
+
+        return response()->json([
+            'success' => true,
+            'nuevo_estado' => $vehiculo->estado
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(Vehiculo $vehiculo)
     {
-        //
-    }
+        try {
+            $vehiculo->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+            return redirect()->route('vehiculos.index')
+                ->with('successMsg', 'El vehículo se eliminó exitosamente');
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        } catch (QueryException $e) {
+            Log::error('Error al eliminar el vehículo: ' . $e->getMessage());
+            return redirect()->route('vehiculos.index')
+                ->withErrors('El registro que desea eliminar tiene información relacionada. Comuníquese con el Administrador');
+        } catch (Exception $e) {
+            Log::error('Error inesperado al eliminar el vehículo: ' . $e->getMessage());
+            return redirect()->route('vehiculos.index')
+                ->withErrors('Ocurrió un error inesperado al eliminar el registro. Comuníquese con el Administrador');
+        }
     }
 }
