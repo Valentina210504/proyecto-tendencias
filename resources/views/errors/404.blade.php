@@ -314,7 +314,7 @@
             <div class="particles" id="particles"></div>
 
             <div class="obj">
-                <img src="https://imgur.com/w0Yb4MX.png" alt="Objeto 404">
+                <img src="https://i.imgur.com/w0Yb4MX.png" alt="Objeto 404">
             </div>
 
             <div class="t404"></div>

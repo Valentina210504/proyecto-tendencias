@@ -63,6 +63,11 @@ Route::post('/recarga_combustibles/{id}/cambio-estado', [Recarga_CombustibleCont
     Route::get('/probar500', function () {
         abort(500);
     });
+    
+    Route::get('/probar419', function () {
+        abort(419);
+    });
+
     Route::get('/probar403', function () {
         abort(403);
     });

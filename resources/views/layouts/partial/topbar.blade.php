@@ -15,26 +15,28 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        
+
         <!-- UserPerfil -->
         <div class="user-panel mt-2 pb-2 mb-2 d-flex">
             <div class="image">
-                <img src="https://i.pinimg.com/originals/48/f7/eb/48f7eb72134ebb24eaddf64adfae6dfa.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="https://i.pinimg.com/originals/48/f7/eb/48f7eb72134ebb24eaddf64adfae6dfa.jpg"
+                    class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ Auth::user()->name ?? 'Alexander Pierce' }}</a>
             </div>
         </div>
-        
+
         <!-- Control Sidebar -->
         <li class="nav-item mt-2 pb-2 mb-2 d-flex">
             <a href="{{ route('logout') }}" class="nav-link"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();"  title="Cerrar Sesión" role="button">
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Cerrar Sesión"
+                role="button">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
             </a>
             <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none">
-				@csrf
-			</form>
+                @csrf
+            </form>
         </li>
     </ul>
 </nav>
