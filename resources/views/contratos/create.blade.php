@@ -81,7 +81,7 @@
                                 </div>
 
                                 {{-- CAMPOS OCULTOS --}}
-                                <input type="hidden" name="estado" value="1">
+                                <input type="hidden" name="estado" value="activo">
                                 <input type="hidden" name="registrado_por" value="{{ Auth::user()->name }}">
 
                             </div>

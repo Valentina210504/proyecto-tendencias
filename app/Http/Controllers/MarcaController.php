@@ -47,12 +47,21 @@ class MarcaController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $marca = Marca::findOrFail($id);
+        return view('marcas.edit', compact('marca'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(MarcaRequest $request, string $id)
     {
-        //
+        try {
+            $marca = Marca::findOrFail($id);
+            $marca->update($request->all());
+            
+            return redirect()->route('marcas.index')->with('successMsg', 'Marca actualizada con éxito');
+        } catch (Exception $e) {
+            Log::error('Error al actualizar la marca: ' . $e->getMessage());
+            return back()->withErrors('Ocurrió un error al actualizar la marca.')->withInput();
+        }
     }
 
     public function destroy(Marca $marca)

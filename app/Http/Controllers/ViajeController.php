@@ -22,7 +22,6 @@ class ViajeController extends Controller
 
     public function create()
     {
-        // 🔹 Traer datos para los SELECT
         $vehiculos = Vehiculo::orderBy('placa')->get();
         $conductores = Conductor::orderBy('nombre')->get();
         $rutas = Ruta::orderBy('nombre_ruta')->get();
@@ -32,7 +31,7 @@ class ViajeController extends Controller
 
         public function store(ViajeRequest $request)
         {
-            // Convertir HH:MM:SS a DATETIME válido
+            
             $request['tiempo_estimado'] = now()->format('Y-m-d') . ' ' . $request->tiempo_estimado;
 
             Viaje::create($request->all());
@@ -60,12 +59,27 @@ class ViajeController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $viaje = Viaje::findOrFail($id);
+        $vehiculos = Vehiculo::where('estado', 1)->get();
+        $conductores = Conductor::where('estado', 'activo')->get();
+        $rutas = Ruta::where('estado', 'activo')->get();
+
+        return view('viajes.edit', compact('viaje', 'vehiculos', 'conductores', 'rutas'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(ViajeRequest $request, string $id)
     {
-        //
+        try {
+            $data = $request->all();
+            $viaje = Viaje::findOrFail($id);
+            $viaje->update($data);
+
+            return redirect()->route('viajes.index')->with('successMsg', 'Viaje actualizado con éxito');
+
+        } catch (Exception $e) {
+            Log::error('Error al actualizar el viaje: ' . $e->getMessage());
+            return back()->withErrors('Ocurrió un error al actualizar el viaje.')->withInput();
+        }
     }
 
     public function destroy(Viaje $viaje)

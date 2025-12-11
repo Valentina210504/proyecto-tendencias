@@ -59,7 +59,7 @@ class RutaController extends Controller
         return view('rutas.edit', compact('ruta'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(RutaRequest $request, string $id)
     {
         $ruta = Ruta::findOrFail($id);
         

@@ -32,16 +32,25 @@ class RutaRequest extends FormRequest
         }
 
         // Actualizar
+        // Actualizar
         if ($this->isMethod('put') || $this->isMethod('patch')) {
-            $rutaId = $this->route('ruta'); // ID que llega desde el parámetro de la ruta
+            // Intentar obtener el parámetro 'ruta' o cualquiera disponible en la ruta
+            $ruta = $this->route('ruta');
+            
+            if (!$ruta && count($this->route()->parameters()) > 0) {
+                $ruta = reset($this->route()->parameters());
+            }
 
+            $id = $ruta instanceof \App\Models\Ruta ? $ruta->id : $ruta;
+            
             return [
-                'nombre_ruta'      => 'required|string|max:255|unique:rutas,nombre_ruta,' . $rutaId,
+                'nombre_ruta'      => 'required|string|max:255|unique:rutas,nombre_ruta,' . $id,
                 'descripcion'      => 'required|string|max:500',
                 'distancia_en_km'  => 'required|numeric|min:0',
-                'tiempo_estimado' => 'required|date_format:H:i:s',
+                'tiempo_estimado'  => 'required', // Relaxed date_format if needed, or keep strict if form sends H:i:s
                 'costo_peaje'      => 'nullable|numeric|min:0',
-                'estado' => 'required|boolean'
+                'registrado_por'   => 'sometimes|string|max:255',
+                'estado'           => 'sometimes|boolean'
             ];
         }
 

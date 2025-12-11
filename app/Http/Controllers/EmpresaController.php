@@ -47,12 +47,21 @@ class EmpresaController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $empresa = Empresa::findOrFail($id);
+        return view('empresas.edit', compact('empresa'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(EmpresaRequest $request, string $id)
     {
-        //
+        try {
+            $empresa = Empresa::findOrFail($id);
+            $empresa->update($request->all());
+            
+            return redirect()->route('empresas.index')->with('successMsg', 'Empresa actualizada con éxito');
+        } catch (Exception $e) {
+            Log::error('Error al actualizar la empresa: ' . $e->getMessage());
+            return back()->withErrors('Ocurrió un error al actualizar la empresa.')->withInput();
+        }
     }
 
     public function destroy(Empresa $empresa)

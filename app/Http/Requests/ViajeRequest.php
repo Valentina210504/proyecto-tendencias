@@ -35,19 +35,25 @@ class ViajeRequest extends FormRequest
             ];
         }
 
-        elseif ($this->isMethod('put') || $this->isMethod('patch')) {
+        if ($this->isMethod('put') || $this->isMethod('patch')) {
 
-            $viajeId = $this->route('viaje'); 
+            
+            $viaje = $this->route('viaje');
+            
+            if (!$viaje && count($this->route()->parameters()) > 0) {
+                $viaje = reset($this->route()->parameters());
+            }
 
             return [
-                'vehiculo_id' => 'required|exists:vehiculos,id',
-                'conductor_id' => 'required|exists:conductores,id',
-                'ruta_id' => 'required|exists:rutas,id',
-                'descripcion' => 'nullable|string|max:500',
-                'recorrido' => 'required|numeric|min:0',
-                'tiempo_estimado' => 'required|date_format:H:i:s',
-                'costo_total' => 'required|numeric|min:0',
-                'estado' => 'required|boolean',
+                'vehiculo_id'    => 'required|exists:vehiculos,id',
+                'conductor_id'   => 'required|exists:conductores,id',
+                'ruta_id'        => 'required|exists:rutas,id',
+                'descripcion'    => 'nullable|string|max:500',
+                'recorrido'      => 'required|numeric|min:0',
+                'tiempo_estimado' => 'required', 
+                'costo_total'    => 'required|numeric|min:0',
+                'registrado_por' => 'sometimes|string|max:255',
+                'estado'         => 'sometimes|boolean',
             ];
         }
     }

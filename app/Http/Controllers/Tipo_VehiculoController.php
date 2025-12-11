@@ -47,12 +47,21 @@ class Tipo_VehiculoController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $tipo_vehiculo = Tipo_Vehiculo::findOrFail($id);
+        return view('tipo_vehiculos.edit', compact('tipo_vehiculo'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Tipo_VehiculoRequest $request, string $id)
     {
-        //
+        try {
+            $tipo_vehiculo = Tipo_Vehiculo::findOrFail($id);
+            $tipo_vehiculo->update($request->all());
+            
+            return redirect()->route('tipo_vehiculos.index')->with('successMsg', 'Tipo de Vehículo actualizado con éxito');
+        } catch (Exception $e) {
+            Log::error('Error al actualizar el tipo de vehículo: ' . $e->getMessage());
+            return back()->withErrors('Ocurrió un error al actualizar el tipo de vehículo.')->withInput();
+        }
     }
 
     public function destroy(Tipo_Vehiculo $tipo_vehiculo)

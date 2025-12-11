@@ -47,13 +47,24 @@ class ConductorController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $conductor = Conductor::findOrFail($id);
+        return view('conductores.edit', compact('conductor'));
     }
 
     public function update(ConductorRequest $request, string $id)
     {
-       //
-  }
+        try {
+            $conductor = Conductor::findOrFail($id);
+            // update() filtrará automáticamente los campos basándose en $fillable en el modelo
+            // y los datos presentes en el request.
+            $conductor->update($request->all());
+            
+            return redirect()->route('conductores.index')->with('successMsg', 'Conductor actualizado con éxito');
+        } catch (Exception $e) {
+            Log::error('Error al actualizar el conductor: ' . $e->getMessage());
+            return back()->withErrors('Ocurrió un error al actualizar el conductor.')->withInput();
+        }
+    }
 
     public function destroy(Conductor $conductor)
     {

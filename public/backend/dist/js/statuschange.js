@@ -103,7 +103,14 @@
           $checkbox.prop("checked", response.nuevo_estado)
 
           // Actualizar el badge visualmente
-          if (response.nuevo_estado) {
+          // Actualizar el badge visualmente
+          // Soporte para boolean (1/true) y string ('activo')
+          const isActivo = response.nuevo_estado === true || 
+                          response.nuevo_estado === 1 || 
+                          response.nuevo_estado === 'activo' ||
+                          response.nuevo_estado === '1';
+
+          if (isActivo) {
             $badge.removeClass("badge-danger").addClass("badge-success")
             $badge.html('<i class="fas fa-check-circle mr-1"></i> Activo')
           } else {

@@ -23,20 +23,22 @@ class Recarga_CombustibleRequest extends FormRequest
     {
         if(request()->isMethod('post')){
             return [
-                'cantidad_litros' => 'required|string|max:255',
-                'precio_litro' => 'required|string|max:255',
-                'costo_total' => 'required|string|max:255',
+                'vehiculo_id' => 'required|exists:vehiculos,id',
+                'cantidad_litros' => 'required|numeric|min:0',
+                'precio_litro' => 'required|numeric|min:0',
+                'costo_total' => 'required|numeric|min:0',
                 'estacion_servicio' => 'required|string|max:255',
                 'estado' => 'required|boolean'
             ];
-        }elseif(request()->isMethod('put') || request()->isMethod('patch')){
-            $marcaId = $this->route('recarga_combustible');
+        } elseif (request()->isMethod('put') || request()->isMethod('patch')) {
             return [
-                'cantidad_litros' => 'required|string|max:255',
-                'precio_litro' => 'required|string|max:255',
-                'costo_total' => 'required|string|max:255',
+                'vehiculo_id' => 'required|exists:vehiculos,id',
+                'cantidad_litros' => 'required|numeric|min:0',
+                'precio_litro' => 'required|numeric|min:0',
+                'costo_total' => 'required|numeric|min:0',
                 'estacion_servicio' => 'required|string|max:255',
-                'estado' => 'required|boolean'
+                'registrado_por' => 'sometimes|string|max:255',
+                'estado' => 'sometimes|boolean'
             ];
         }
     }

@@ -47,12 +47,21 @@ class LicenciaController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $licencia = Licencia::findOrFail($id);
+        return view('licencias.edit', compact('licencia'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(LicenciaRequest $request, string $id)
     {
-        //
+        try {
+            $licencia = Licencia::findOrFail($id);
+            $licencia->update($request->all());
+            
+            return redirect()->route('licencias.index')->with('successMsg', 'Licencia actualizada con éxito');
+        } catch (Exception $e) {
+            Log::error('Error al actualizar la licencia: ' . $e->getMessage());
+            return back()->withErrors('Ocurrió un error al actualizar la licencia.')->withInput();
+        }
     }
 
     public function destroy(Licencia $licencia)

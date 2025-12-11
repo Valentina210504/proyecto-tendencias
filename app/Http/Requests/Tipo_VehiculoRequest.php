@@ -35,16 +35,23 @@ class Tipo_VehiculoRequest extends FormRequest
         // UPDATE
         if ($this->isMethod('put') || $this->isMethod('patch')) {
 
-            // Obtiene el ID desde la ruta
-            $tipoVehiculoId = $this->route('tipo_vehiculo');
+            // Intentar obtener el parámetro 'tipo_vehiculo' o cualquiera disponible en la ruta
+            $tipo_vehiculo = $this->route('tipo_vehiculo');
+            
+            if (!$tipo_vehiculo && count($this->route()->parameters()) > 0) {
+                $tipo_vehiculo = reset($this->route()->parameters());
+            }
+
+            $id = $tipo_vehiculo instanceof \App\Models\Tipo_Vehiculo ? $tipo_vehiculo->id : $tipo_vehiculo;
 
             return [
-                'nombre' => 'required|string|max:255|unique:tipo_vehiculos,nombre,' . $tipoVehiculoId,
+                'nombre' => 'required|string|max:255|unique:tipo_vehiculos,nombre,' . $id,
                 'descripcion' => 'nullable|string|max:500',
                 'capacidad_pasajero' => 'required|integer|min:1|max:60',
                 'capacidad_carga' => 'required|numeric|min:0|max:10000',
                 'capacidad_gasolina' => 'required|numeric|min:0|max:200',
-                'estado' => 'required|boolean',
+                'registrado_por' => 'sometimes|string|max:255',
+                'estado' => 'sometimes|boolean',
             ];
         }
 

@@ -33,20 +33,29 @@ class VehiculoRequest extends FormRequest
             ];
         }
 
-        // Actualizar (PUT / PATCH)
+       
         if ($this->isMethod('put') || $this->isMethod('patch')) {
 
-            $vehiculoId = $this->route('vehiculo');
+           
+            $vehiculo = $this->route('vehiculo');
+            
+            if (!$vehiculo && count($this->route()->parameters()) > 0) {
+                $vehiculo = reset($this->route()->parameters());
+            }
+
+            $id = $vehiculo instanceof \App\Models\Vehiculo ? $vehiculo->id : $vehiculo;
 
             return [
                 'marca_id'          => 'required|exists:marcas,id',
                 'tipo_vehiculo_id'  => 'required|exists:tipo_vehiculos,id',
-                'placa'             => 'required|string|max:10|unique:vehiculos,placa,' . $vehiculoId,
+                'placa'             => 'required|string|max:10|unique:vehiculos,placa,' . $id,
                 'modelo'            => 'required|string|max:255',
-                'año'               => 'required|integer|min:1900|max:' . date('Y'),
+                'año'               => 'required|integer|min:1900|max:' . (date('Y') + 1),
                 'color'             => 'required|string|max:255',
                 'kilometraje'       => 'nullable|numeric|min:0',
-                'estado' => 'required|boolean'
+                'imagen'            => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+                'registrado_por'    => 'sometimes|string|max:255',
+                'estado'            => 'sometimes|boolean'
             ];
         }
 

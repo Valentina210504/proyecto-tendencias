@@ -30,15 +30,25 @@ class EmpresaRequest extends FormRequest
                 'email' => 'required|email|max:255',
                 'estado' => 'required|boolean'
             ];
-        }elseif(request()->isMethod('put') || request()->isMethod('patch')){
-            $empresaId = $this->route('empresa');
+        } elseif (request()->isMethod('put') || request()->isMethod('patch')) {
+            // Intentar obtener el parámetro 'empresa' o cualquiera disponible en la ruta
+            $empresa = $this->route('empresa');
+            
+            if (!$empresa && count($this->route()->parameters()) > 0) {
+                $empresa = reset($this->route()->parameters());
+            }
+
+            $id = $empresa instanceof \App\Models\Empresa ? $empresa->id : $empresa;
+
             return [
-                'nit' => 'required|string|max:255|unique:empresas,nit,'.$empresaId, 
+                'nit' => 'required|string|max:255|unique:empresas,nit,' . $id,
                 'nombre' => 'required|string|max:255',
                 'direccion' => 'required|string|max:255',
                 'telefono' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
-                'estado' => 'required|boolean'
+                'registrado_por' => 'sometimes|string|max:255',
+                // 'estado' se hace opcional o sometimes para evitar errores si no se envía
+                'estado' => 'sometimes|boolean' 
             ];
         }
     }

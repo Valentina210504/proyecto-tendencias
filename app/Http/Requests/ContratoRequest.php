@@ -24,14 +24,15 @@ class ContratoRequest extends FormRequest
                 'fecha_inicio' => 'required|date',
                 'fecha_final' => 'nullable|date|after_or_equal:fecha_inicio',
                 'salario' => 'required|numeric|min:0',
-                'estado' => 'required|in:activo,suspendido,finalizado',
+                'estado' => 'required|in:activo,inactivo',
             ];
         } elseif (request()->isMethod('put') || request()->isMethod('patch')) {
             return [
                 'fecha_inicio' => 'required|date',
                 'fecha_final' => 'nullable|date|after_or_equal:fecha_inicio',
                 'salario' => 'required|numeric|min:0',
-                'estado' => 'required|in:activo,suspendido,finalizado',
+                'registrado_por' => 'sometimes|string|max:255',
+                
             ];
         }
     }

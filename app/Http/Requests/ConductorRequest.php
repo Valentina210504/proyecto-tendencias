@@ -27,19 +27,30 @@ class ConductorRequest extends FormRequest
                 'fecha_contrato' => 'nullable|date',
                 'estado' => 'required|in:activo,inactivo',
                 'registrado_por' => 'required|string|max:255',
+
             ];
         } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
-            $conductorId = $this->route('conductor');
+            // Intentar obtener el parámetro 'conductor' o 'conductore' (Laravel a veces singulariza así)
+            $conductor = $this->route('conductor') ?? $this->route('conductore');
+            
+            // Si sigue siendo null, intentar obtener el primer parámetro disponible
+            if (!$conductor && count($this->route()->parameters()) > 0) {
+                $conductor = reset($this->route()->parameters());
+            }
+
+            $id = $conductor instanceof \App\Models\Conductor ? $conductor->id : $conductor;
+
             return [
                 'nombre' => 'required|string|max:255',
                 'apellido' => 'required|string|max:255',
-                'documento' => 'required|string|max:20|unique:conductores,documento,' . $conductorId,
+                'documento' => 'required|string|max:20|unique:conductores,documento,' . $id,
                 'fecha_contrato' => 'nullable|date',
-                'estado' => 'required|in:activo,inactivo',
-                'registrado_por' => 'required|string|max:255',
+                // 'estado' se elimina de la validación de actualización
+                'registrado_por' => 'sometimes|string|max:255', 
             ];
         }
     }
+
 
     /**
      * Mensajes personalizados para los errores de validación.

@@ -48,6 +48,40 @@ class VehiculoController extends Controller
         ]);
     }
 
+    public function edit(string $id)
+    {
+        $vehiculo = Vehiculo::findOrFail($id);
+        $marcas = Marca::where('estado', 1)->get();
+        $tipo_vehiculos = Tipo_Vehiculo::where('estado', 1)->get();
+        return view('vehiculos.edit', compact('vehiculo', 'marcas', 'tipo_vehiculos'));
+    }
+
+    public function update(VehiculoRequest $request, string $id)
+    {
+        try {
+            $vehiculo = Vehiculo::findOrFail($id);
+            $data = $request->all();
+
+            if ($request->hasFile('imagen')) {
+                if ($vehiculo->imagen && file_exists(public_path('uploads/vehiculos/' . $vehiculo->imagen))) {
+                    unlink(public_path('uploads/vehiculos/' . $vehiculo->imagen));
+                }
+
+                $file = $request->file('imagen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/vehiculos'), $filename);
+                $data['imagen'] = $filename;
+            }
+
+            $vehiculo->update($data);
+            
+            return redirect()->route('vehiculos.index')->with('successMsg', 'Vehículo actualizado con éxito');
+        } catch (Exception $e) {
+            Log::error('Error al actualizar el vehículo: ' . $e->getMessage());
+            return back()->with('error', 'Ocurrió un error al actualizar el vehículo.')->withInput();
+        }
+    }
+
     public function destroy(Vehiculo $vehiculo)
     {
         try {

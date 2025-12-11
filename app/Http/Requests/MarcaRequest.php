@@ -27,12 +27,21 @@ class MarcaRequest extends FormRequest
                 'pais_origen' => 'required|string|max:255',
                 'estado' => 'required|boolean'
             ];
-        }elseif(request()->isMethod('put') || request()->isMethod('patch')){
-            $marcaId = $this->route('marca');
+        } elseif (request()->isMethod('put') || request()->isMethod('patch')) {
+            // Intentar obtener el parámetro 'marca' o cualquiera disponible en la ruta
+            $marca = $this->route('marca');
+            
+            if (!$marca && count($this->route()->parameters()) > 0) {
+                $marca = reset($this->route()->parameters());
+            }
+
+            $id = $marca instanceof \App\Models\Marca ? $marca->id : $marca;
+
             return [
-                'nombre' => 'required|string|max:255|unique:marcas,nombre,' . $marcaId,
+                'nombre' => 'required|string|max:255|unique:marcas,nombre,' . $id,
                 'pais_origen' => 'required|string|max:255',
-                'estado' => 'required|boolean'
+                'registrado_por' => 'sometimes|string|max:255',
+                'estado' => 'sometimes|boolean'
             ];
         }
     }

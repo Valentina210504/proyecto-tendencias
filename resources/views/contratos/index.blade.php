@@ -95,15 +95,10 @@
                                                     title="Clic para cambiar estado">
                                                     <i class="fas fa-check-circle mr-1"></i> Activo
                                                 </span>
-                                                @elseif($contrato->estado === 'suspendido')
-                                                <span class="badge badge-warning px-3 py-2" style="cursor: pointer;"
-                                                    title="Clic para cambiar estado">
-                                                    <i class="fas fa-pause-circle mr-1"></i> Suspendido
-                                                </span>
                                                 @else
                                                 <span class="badge badge-danger px-3 py-2" style="cursor: pointer;"
                                                     title="Clic para cambiar estado">
-                                                    <i class="fas fa-times-circle mr-1"></i> Finalizado
+                                                    <i class="fas fa-times-circle mr-1"></i> Inactivo
                                                 </span>
                                                 @endif
                                                 <input data-type="contratos" data-id="{{ $contrato->id }}"

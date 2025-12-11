@@ -13,6 +13,7 @@ class Recarga_Combustible extends Model
     protected $table = 'recarga_combustibles';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'vehiculo_id',
         'cantidad_litros',
         'precio_litro',
         'costo_total',

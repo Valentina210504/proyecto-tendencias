@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Recarga_Combustible;
+use App\Models\Vehiculo;
 use Illuminate\Database\QueryException;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -48,12 +49,22 @@ public function cambioestadorecarga_combustible($id)
 
     public function edit(string $id)
     {
-        //
+        $recarga_combustible = Recarga_Combustible::findOrFail($id);
+        $vehiculos = Vehiculo::where('estado', 1)->get(); // Solo vehículos activos
+        return view('recarga_combustibles.edit', compact('recarga_combustible', 'vehiculos'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Recarga_CombustibleRequest $request, string $id)
     {
-        //
+        try {
+            $recarga_combustible = Recarga_Combustible::findOrFail($id);
+            $recarga_combustible->update($request->all());
+            
+            return redirect()->route('recarga_combustibles.index')->with('successMsg', 'Recarga actualizada con éxito');
+        } catch (Exception $e) {
+            Log::error('Error al actualizar la recarga: ' . $e->getMessage());
+            return back()->withErrors('Ocurrió un error al actualizar la recarga.')->withInput();
+        }
     }
 
     public function destroy(Recarga_Combustible $recarga_combustible)
