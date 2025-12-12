@@ -1,23 +1,24 @@
-@extends('layouts.app')
+@extends('layouts.modern')
 
 @section('title','Listado De Vehículos')
 
+@push('breadcrumbs')
+    <li class="breadcrumb-item active">Vehículos</li>
+@endpush
+
 @section('content')
 
-<div class="content-wrapper pb-4">
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="m-0"><i class="fas fa-car mr-2"></i>Vehículos</h1>
-                <a href="{{ route('vehiculos.create') }}" class="btn btn-primary">
-                    <i class="fas fa-plus mr-1"></i> Nuevo Vehículo
-                </a>
-            </div>
-        </div>
-    </section>
+<div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="m-0" style="font-size: 28px; font-weight: 700; color: #1e293b;">
+            <i class="fas fa-car mr-2" style="color: #4A90E2;"></i>Vehículos
+        </h1>
+        <a href="{{ route('vehiculos.create') }}" class="btn btn-primary" style="background: #4A90E2; border: none; padding: 10px 20px; border-radius: 8px;">
+            <i class="fas fa-plus mr-1"></i> Nuevo Vehículo
+        </a>
+    </div>
 
-    <section class="content">
-        <div class="container-fluid">
+    <div>
             <div class="row">
                 <div class="col-12">
                     <div class="card shadow-sm border-0">
@@ -206,7 +207,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </div>
 
 

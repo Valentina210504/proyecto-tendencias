@@ -1,9 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.modern')
 
 @section('content')
 
-<div class="content-wrapper" style="background: #f8f9fa;">
-    <div class="content-header">
+@push('breadcrumbs')
+    <li class="breadcrumb-item active">Dashboard</li>
+@endpush
+
+<div>
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
@@ -353,7 +356,6 @@
         </section>
     </div>
 </div>
-
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
