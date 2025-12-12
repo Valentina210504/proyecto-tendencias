@@ -25,90 +25,89 @@
 
 
                 <div class="row">
-
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card border-0 shadow-sm"
-                            style="border-radius: 16px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <!-- Total Vehículos Card -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; background: white;">
                             <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <p class="text-white-50 mb-1" style="font-size: 14px; font-weight: 500;">Total
-                                            Vehículos</p>
-                                        <h2 class="text-white mb-0" style="font-size: 32px; font-weight: 700;">
+                                        <p class="text-muted mb-1" style="font-size: 13px; font-weight: 500;">Total Vehículos</p>
+                                        <h2 class="mb-1" style="font-size: 28px; font-weight: 700; color: #1e293b;">
                                             {{ $totalVehiculos ?? 20 }}
                                         </h2>
+                                        <small style="color: #10b981; font-size: 12px;">
+                                            <i class="fas fa-arrow-up"></i> +2.1% desde la semana pasada
+                                        </small>
                                     </div>
-                                    <div class="bg-white bg-opacity-25 p-3 rounded-circle">
-                                        <i class="fas fa-car text-white" style="font-size: 24px;"></i>
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
+                                        <i class="fas fa-car text-white" style="font-size: 22px;"></i>
                                     </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="text-white-50" style="font-size: 13px;">
-                                        <i class="fas fa-arrow-up"></i> 2.1% vs last week
-                                    </span>
-                                    <a href="{{ route('vehiculos.index') }}" class="text-white"
-                                        style="font-size: 13px; text-decoration: none;">
-                                        View Report <i class="fas fa-chevron-right ml-1"></i>
-                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Conductores Card -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card border-0 shadow-sm" style="border-radius: 16px; background: white;">
+                    <!-- Conductores Activos Card -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; background: white;">
                             <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <p class="text-muted mb-1" style="font-size: 14px; font-weight: 500;">
-                                            Conductores Activos</p>
-                                        <h2 class="mb-0" style="font-size: 32px; font-weight: 700; color: #2d3748;">
+                                        <p class="text-muted mb-1" style="font-size: 13px; font-weight: 500;">Total Conductores</p>
+                                        <h2 class="mb-1" style="font-size: 28px; font-weight: 700; color: #1e293b;">
                                             {{ $conductoresActivos ?? 0 }}
                                         </h2>
+                                        <small style="color: #10b981; font-size: 12px;">
+                                            <i class="fas fa-arrow-up"></i> +5.4% desde la semana pasada
+                                        </small>
                                     </div>
-                                    <div style="background: #d1fae5; padding: 12px; border-radius: 12px;">
-                                        <i class="fas fa-user-tie" style="font-size: 24px; color: #10b981;"></i>
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);">
+                                        <i class="fas fa-user-tie text-white" style="font-size: 22px;"></i>
                                     </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="text-muted" style="font-size: 13px;">
-                                        <i class="fas fa-arrow-up text-success"></i>
-                                        <span class="text-success">5.2%</span> vs last week
-                                    </span>
-                                    <a href="{{ route('conductores.index') }}"
-                                        style="color: #10b981; font-size: 13px; text-decoration: none;">
-                                        View Report <i class="fas fa-chevron-right ml-1"></i>
-                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Viajes Card -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card border-0 shadow-sm" style="border-radius: 16px; background: white;">
+                    <!-- Viajes del Mes Card -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; background: white;">
                             <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <p class="text-muted mb-1" style="font-size: 14px; font-weight: 500;">Viajes del
-                                            Mes</p>
-                                        <h2 class="mb-0" style="font-size: 32px; font-weight: 700; color: #2d3748;">
+                                        <p class="text-muted mb-1" style="font-size: 13px; font-weight: 500;">Viajes del Mes</p>
+                                        <h2 class="mb-1" style="font-size: 28px; font-weight: 700; color: #1e293b;">
                                             {{ $viajesDelMes ?? 0 }}
                                         </h2>
+                                        <small style="color: #10b981; font-size: 12px;">
+                                            <i class="fas fa-arrow-up"></i> +4.5% desde la semana pasada
+                                        </small>
                                     </div>
-                                    <div style="background: #fef3c7; padding: 12px; border-radius: 12px;">
-                                        <i class="fas fa-route" style="font-size: 24px; color: #f59e0b;"></i>
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+                                        <i class="fas fa-route text-white" style="font-size: 22px;"></i>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Ganancias Card -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; background: white;">
+                            <div class="card-body p-4">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="text-muted" style="font-size: 13px;">
-                                        From 1-6 Dec, 2024
-                                    </span>
-                                    <a href="{{ route('viajes.index') }}"
-                                        style="color: #10b981; font-size: 13px; text-decoration: none;">
-                                        View Report <i class="fas fa-chevron-right ml-1"></i>
-                                    </a>
+                                    <div>
+                                        <p class="text-muted mb-1" style="font-size: 13px; font-weight: 500;">Gasto Combustible</p>
+                                        <h2 class="mb-1" style="font-size: 28px; font-weight: 700; color: #1e293b;">
+                                            ${{ number_format($gastoCombustibleMes ?? 0, 0) }}
+                                        </h2>
+                                        <small style="color: #10b981; font-size: 12px;">
+                                            <i class="fas fa-arrow-up"></i> +8.4% desde la semana pasada
+                                        </small>
+                                    </div>
+                                    <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">
+                                        <i class="fas fa-gas-pump text-white" style="font-size: 22px;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -117,14 +116,17 @@
 
 
                 <div class="row">
-
                     <div class="col-lg-8 mb-4">
-                        <div class="card border-0 shadow-sm" style="border-radius: 16px;">
+                        <div class="card border-0 shadow-sm" style="border-radius: 12px; background: white;">
                             <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <h5 class="mb-0" style="color: #2d3748; font-weight: 600;">Viajes por Mes</h5>
-                                    <a href="#" style="color: #10b981; font-size: 13px; text-decoration: none;">View
-                                        Report</a>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <h5 class="mb-0" style="color: #1e293b; font-weight: 600; font-size: 16px;">Resumen de Viajes</h5>
+                                        <p class="text-muted mb-0" style="font-size: 13px;">Comparación mensual de viajes</p>
+                                    </div>
+                                    <button class="btn btn-sm" style="background: #f1f5f9; border: none; border-radius: 8px; padding: 6px 12px;">
+                                        <i class="fas fa-ellipsis-h" style="color: #64748b;"></i>
+                                    </button>
                                 </div>
                                 <div style="position: relative; height: 250px;">
                                     <canvas id="viajesChart"></canvas>
@@ -147,12 +149,16 @@
 
 
                     <div class="col-lg-4 mb-4">
-                        <div class="card border-0 shadow-sm" style="border-radius: 16px;">
+                        <div class="card border-0 shadow-sm" style="border-radius: 12px; background: white;">
                             <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <h5 class="mb-0" style="color: #2d3748; font-weight: 600;">Distribución</h5>
-                                    <a href="#" style="color: #10b981; font-size: 13px; text-decoration: none;">View
-                                        Report</a>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <h5 class="mb-0" style="color: #1e293b; font-weight: 600; font-size: 16px;">Horarios de Viajes</h5>
+                                        <p class="text-muted mb-0" style="font-size: 13px;">Distribución por horario</p>
+                                    </div>
+                                    <button class="btn btn-sm" style="background: #f1f5f9; border: none; border-radius: 8px; padding: 6px 12px;">
+                                        <i class="fas fa-ellipsis-h" style="color: #64748b;"></i>
+                                    </button>
                                 </div>
                                 <div style="position: relative; height: 180px;" class="text-center">
                                     <canvas id="vehiculosChart"></canvas>
@@ -190,17 +196,18 @@
 
 
                 <div class="row">
-
                     <div class="col-lg-6 mb-4">
-                        <div class="card border-0 shadow-sm" style="border-radius: 16px;">
+                        <div class="card border-0 shadow-sm" style="border-radius: 12px; background: white;">
                             <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <h5 class="mb-0" style="color: #2d3748; font-weight: 600;">Vehículos Más Usados</h5>
-                                    <a href="#" style="color: #10b981; font-size: 13px; text-decoration: none;">View
-                                        Report</a>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <h5 class="mb-0" style="color: #1e293b; font-weight: 600; font-size: 16px;">Vehículos Más Usados</h5>
+                                        <p class="text-muted mb-0" style="font-size: 13px;">Top vehículos por kilometraje</p>
+                                    </div>
+                                    <button class="btn btn-sm" style="background: #f1f5f9; border: none; border-radius: 8px; padding: 6px 12px;">
+                                        <i class="fas fa-ellipsis-h" style="color: #64748b;"></i>
+                                    </button>
                                 </div>
-                                <p class="text-muted mb-4" style="font-size: 13px;">Vehículos con más viajes este mes
-                                </p>
 
                                 <div class="list-group list-group-flush">
                                     @forelse($vehiculosMayorKilometraje ?? [] as $index => $vehiculo)
@@ -234,17 +241,16 @@
 
 
                     <div class="col-lg-6 mb-4">
-                        <div class="card border-0 shadow-sm" style="border-radius: 16px;">
+                        <div class="card border-0 shadow-sm" style="border-radius: 12px; background: white;">
                             <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
                                     <div>
-                                        <h5 class="mb-1" style="color: #2d3748; font-weight: 600;">Gasto Combustible
-                                        </h5>
-                                        <p class="text-muted mb-0" style="font-size: 13px;">Desde el 1-6 Dic, 2024</p>
+                                        <h5 class="mb-0" style="color: #1e293b; font-weight: 600; font-size: 16px;">Gasto en Combustible</h5>
+                                        <p class="text-muted mb-0" style="font-size: 13px;">Tendencia últimos 6 días</p>
                                     </div>
                                     <a href="{{ route('recarga_combustibles.index') }}"
-                                        style="color: #10b981; font-size: 13px; text-decoration: none;">
-                                        View Report
+                                        class="btn btn-sm" style="background: #f1f5f9; border: none; border-radius: 8px; padding: 6px 12px; text-decoration: none;">
+                                        <i class="fas fa-external-link-alt" style="color: #64748b; font-size: 11px;"></i>
                                     </a>
                                 </div>
 
@@ -270,13 +276,18 @@
 
                 <div class="row">
                     <div class="col-lg-12 mb-4">
-                        <div class="card border-0 shadow-sm" style="border-radius: 16px;">
+                        <div class="card border-0 shadow-sm" style="border-radius: 12px; background: white;">
                             <div class="card-body p-4">
                                 <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <h5 class="mb-0" style="color: #2d3748; font-weight: 600;">
-                                        <i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i>
-                                        Alertas Importantes
-                                    </h5>
+                                    <div class="d-flex align-items-center">
+                                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                            <i class="fas fa-exclamation-triangle" style="color: #f59e0b; font-size: 18px;"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-0" style="color: #1e293b; font-weight: 600; font-size: 16px;">Alertas Importantes</h5>
+                                            <p class="text-muted mb-0" style="font-size: 13px;">Monitoreo de licencias y actividad</p>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row">
