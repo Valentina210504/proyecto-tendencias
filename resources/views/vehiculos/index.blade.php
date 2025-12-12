@@ -47,6 +47,9 @@
                                             <th class="text-center" style="width: 60px;">
                                                 <i class="fas fa-hashtag text-muted"></i> ID
                                             </th>
+                                            <th class="text-center" style="width: 70px;">
+                                                <i class="fas fa-image text-muted"></i> Logo
+                                            </th>
                                             <th>
                                                 <i class="fas fa-id-card text-muted"></i> Placa
                                             </th>
@@ -84,6 +87,46 @@
                                         <tr>
                                             <td class="text-center font-weight-bold text-muted">
                                                 {{ $vehiculo->id }}
+                                            </td>
+                                            <td class="text-center">
+                                                <div style="position: relative; width: 50px; height: 50px; margin: 0 auto;">
+                                                    @php
+                                                        $marcaNombre = $vehiculo->marca->nombre ?? 'N/A';
+                                                        $tipoVehiculo = $vehiculo->tipo_vehiculo->nombre ?? 'car';
+                                                        $hasUploadedImage = !empty($vehiculo->imagen) && file_exists(public_path($vehiculo->imagen));
+                                                        
+                                                        // Imagen local basada en la marca (nombre en minúsculas, sin espacios)
+                                                        // Las imágenes deben estar en: public/img/vehiculos/
+                                                        // Ejemplo: public/img/vehiculos/toyota.png, public/img/vehiculos/samsung.png
+                                                        $marcaSlug = strtolower(str_replace(' ', '-', $marcaNombre));
+                                                        $imagenMarca = "img/vehiculos/{$marcaSlug}.png";
+                                                        $imagenDefault = "img/vehiculos/default.png";
+                                                        
+                                                        $hasLocalImage = file_exists(public_path($imagenMarca));
+                                                    @endphp
+                                                    
+                                                    @if($hasUploadedImage)
+                                                        
+                                                        <img src="{{ asset($vehiculo->imagen) }}" 
+                                                             alt="{{ $marcaNombre }} {{ $tipoVehiculo }}" 
+                                                             style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                    @elseif($hasLocalImage)
+                                                        {{-- Imagen local de la marca --}}
+                                                        <img src="{{ asset($imagenMarca) }}" 
+                                                             alt="{{ $marcaNombre }}" 
+                                                             style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                    @else
+                                                        
+                                                        <img src="{{ asset($imagenDefault) }}" 
+                                                             alt="Vehículo" 
+                                                             style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                       
+                                                        <div style="display: none; width: 50px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); align-items: center; justify-content: center; color: white; font-size: 20px;">
+                                                            <i class="fas fa-car"></i>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </td>
                                             <td>
                                                 <span class="font-weight-bold text-dark">{{ $vehiculo->placa }}</span>

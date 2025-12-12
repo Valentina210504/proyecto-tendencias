@@ -28,6 +28,7 @@ class Tipo_VehiculoRequest extends FormRequest
                 'capacidad_pasajero' => 'required|integer|min:1|max:60',
                 'capacidad_carga' => 'required|numeric|min:0|max:10000',
                 'capacidad_gasolina' => 'required|numeric|min:0|max:200',
+                'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'estado' => 'required|boolean',
             ];
         }
@@ -50,6 +51,7 @@ class Tipo_VehiculoRequest extends FormRequest
                 'capacidad_pasajero' => 'required|integer|min:1|max:60',
                 'capacidad_carga' => 'required|numeric|min:0|max:10000',
                 'capacidad_gasolina' => 'required|numeric|min:0|max:200',
+                'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
                 'registrado_por' => 'sometimes|string|max:255',
                 'estado' => 'sometimes|boolean',
             ];

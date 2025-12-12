@@ -47,6 +47,9 @@
                                             <th class="text-center" style="width: 60px;">
                                                 <i class="fas fa-hashtag text-muted"></i> ID
                                             </th>
+                                            <th class="text-center" style="width: 70px;">
+                                                <i class="fas fa-image text-muted"></i> Logo
+                                            </th>
                                             <th>
                                                 <i class="fas fa-building text-muted"></i> Nombre
                                             </th>
@@ -69,6 +72,24 @@
                                         <tr>
                                             <td class="text-center font-weight-bold text-muted">
                                                 {{ $marca->id }}
+                                            </td>
+                                            <td class="text-center">
+                                                @if($marca->imagen && file_exists(public_path($marca->imagen)))
+                                                    {{-- Mostrar imagen subida --}}
+                                                    <img src="{{ asset($marca->imagen) }}" alt="{{ $marca->nombre }}" 
+                                                        style="width: 50px; height: 50px; border-radius: 8px; object-fit: contain; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 0 auto; display: block; background: #ffffff;">
+                                                @else
+                                                    {{-- Mostrar iniciales por defecto --}}
+                                                    @php
+                                                        $iniciales = strtoupper(substr($marca->nombre, 0, 2));
+                                                        $colors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
+                                                        $colorIndex = ord(strtoupper(substr($marca->nombre, 0, 1))) % count($colors);
+                                                        $bgColor = $colors[$colorIndex];
+                                                    @endphp
+                                                    <div style="width: 50px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, {{ $bgColor }} 0%, {{ $bgColor }}dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 0 auto;">
+                                                        {{ $iniciales }}
+                                                    </div>
+                                                @endif
                                             </td>
                                             <td>
                                                 <span class="font-weight-bold text-dark">{{ $marca->nombre }}</span>

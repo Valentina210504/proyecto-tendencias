@@ -25,6 +25,7 @@ class MarcaRequest extends FormRequest
             return [
                 'nombre' => 'required|string|max:255|unique:marcas,nombre',
                 'pais_origen' => 'required|string|max:255',
+                'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'estado' => 'required|boolean'
             ];
         } elseif (request()->isMethod('put') || request()->isMethod('patch')) {
@@ -40,6 +41,7 @@ class MarcaRequest extends FormRequest
             return [
                 'nombre' => 'required|string|max:255|unique:marcas,nombre,' . $id,
                 'pais_origen' => 'required|string|max:255',
+                'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
                 'registrado_por' => 'sometimes|string|max:255',
                 'estado' => 'sometimes|boolean'
             ];

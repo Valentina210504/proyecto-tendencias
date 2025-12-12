@@ -13,6 +13,7 @@ class Marca extends Model
  protected $primaryKey = 'id';
  protected $fillable = [
 'nombre',
+'imagen',
 'pais_origen',
 'estado',
 'registrado_por'

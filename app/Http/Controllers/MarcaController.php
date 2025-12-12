@@ -24,7 +24,23 @@ class MarcaController extends Controller
 
     public function store(MarcaRequest $request)
     {
-        $marca = Marca::create($request->all());
+        $data = $request->all();
+        
+        // Manejar la imagen
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            
+            $path = public_path('images/marcas');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            
+            $imagen->move($path, $nombreImagen);
+            $data['imagen'] = 'images/marcas/' . $nombreImagen;
+        }
+        
+        $marca = Marca::create($data);
         return redirect()->route('marcas.index')->with('successMsg', 'Marca creada con exito');
     }
 
@@ -55,7 +71,29 @@ class MarcaController extends Controller
     {
         try {
             $marca = Marca::findOrFail($id);
-            $marca->update($request->all());
+            $data = $request->all();
+            
+            // Manejar la subida de imagen
+            if ($request->hasFile('imagen')) {
+                // Eliminar imagen anterior si existe
+                if ($marca->imagen && file_exists(public_path($marca->imagen))) {
+                    unlink(public_path($marca->imagen));
+                }
+                
+                $imagen = $request->file('imagen');
+                $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+                
+                $path = public_path('images/marcas');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                $imagen->move($path, $nombreImagen);
+                $data['imagen'] = 'images/marcas/' . $nombreImagen;
+                Log::info('Imagen actualizada: ' . $data['imagen']);
+            }
+            
+            $marca->update($data);
             
             return redirect()->route('marcas.index')->with('successMsg', 'Marca actualizada con éxito');
         } catch (Exception $e) {

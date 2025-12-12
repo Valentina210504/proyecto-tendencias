@@ -18,7 +18,7 @@
                             <h3>@yield('title')</h3>
                         </div>
 
-                        <form method="POST" action="{{ route('licencias.store') }}">
+                        <form method="POST" action="{{ route('licencias.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
 
@@ -51,9 +51,16 @@
                                         <div class="form-group label-floating">
                                             <label class="control-label">Número de Licencia <strong
                                                     style="color:red;">(*)</strong></label>
-                                            <input type="text" class="form-control" name="numero_licencia"
-                                                placeholder="Ej: LIC-1234-5678" autocomplete="off"
-                                                value="{{ old('numero_licencia') }}" required>
+                                            <div class="d-flex align-items-center">
+                                                <div id="licenciaIconPreview" class="mr-3">
+                                                    <div id="licenciaIconBox" style="width: 60px; height: 60px; border-radius: 8px; background: linear-gradient(135deg, #10b981 0%, #10b981dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                        <i class="fas fa-id-card"></i>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" name="numero_licencia" id="numeroLicencia"
+                                                    placeholder="Ej: LIC-1234-5678" autocomplete="off"
+                                                    value="{{ old('numero_licencia') }}" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -114,6 +121,30 @@
                                     </div>
                                 </div>
 
+                                {{-- Imagen de la licencia --}}
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="control-label"><i class="fas fa-camera text-info mr-1"></i>Foto de la Licencia</label>
+                                            <div class="d-flex align-items-center">
+                                                <div id="imagenPreview" class="mr-3" style="display: none;">
+                                                    <img id="imagenPreviewImg" src="" alt="Vista previa" 
+                                                         style="width: 100px; height: 70px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                </div>
+                                                <div id="imagenPlaceholder" class="mr-3">
+                                                    <div style="width: 100px; height: 70px; border-radius: 8px; background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%); display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 24px;">
+                                                        <i class="fas fa-id-card"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <input type="file" name="imagen" id="imagenInput" class="form-control-file" accept="image/*">
+                                                    <small class="form-text text-muted">Sube una foto de la licencia física. Formatos: JPG, PNG</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {{-- Hidden fields --}}
                                 <input type="hidden" name="estado" value="1">
                                 <input type="hidden" name="registrado_por" value="{{ Auth::user()->name }}">
@@ -141,3 +172,26 @@
     </section>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        // Vista previa de imagen
+        $('#imagenInput').on('change', function() {
+            var file = this.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagenPreviewImg').attr('src', e.target.result);
+                    $('#imagenPreview').show();
+                    $('#imagenPlaceholder').hide();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#imagenPreview').hide();
+                $('#imagenPlaceholder').show();
+            }
+        });
+    });
+</script>
+@endpush

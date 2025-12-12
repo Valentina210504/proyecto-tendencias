@@ -18,7 +18,7 @@
                             <h3>@yield('title')</h3>
                         </div>
 
-                        <form method="POST" action="{{ route('rutas.store') }}">
+                        <form method="POST" action="{{ route('rutas.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
 
@@ -52,9 +52,16 @@
                                             <label class="control-label">
                                                 Nombre de la Ruta <strong style="color:red;">(*)</strong>
                                             </label>
-                                            <input type="text" class="form-control" name="nombre_ruta"
-                                                placeholder="Ejemplo: Medellín - Bogotá" autocomplete="off"
-                                                value="{{ old('nombre_ruta') }}" required>
+                                            <div class="d-flex align-items-center">
+                                                <div id="rutaIconPreview" class="mr-3">
+                                                    <div id="rutaIconBox" style="width: 60px; height: 60px; border-radius: 8px; background: linear-gradient(135deg, #3b82f6 0%, #3b82f6dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                        <i class="fas fa-route"></i>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" name="nombre_ruta" id="nombreRuta"
+                                                    placeholder="Ejemplo: Medellín - Bogotá" autocomplete="off"
+                                                    value="{{ old('nombre_ruta') }}" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -106,6 +113,25 @@
                                     </div>
                                 </div>
 
+                                {{-- IMAGEN/LOGO DE LA RUTA --}}
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Logo de la Ruta</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="imagenRuta" name="imagen" accept="image/*" onchange="previewImage(event)">
+                                                <label class="custom-file-label" for="imagenRuta">Seleccionar imagen...</label>
+                                            </div>
+                                            <small class="form-text text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB</small>
+                                            
+                                            {{-- Preview --}}
+                                            <div id="imagePreview" class="mt-3" style="display: none;">
+                                                <img id="preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <input type="hidden" class="form-control" name="estado" value="1">
                                 <input type="hidden" class="form-control" name="registrado_por"
                                     value="{{ Auth::user()->name }}">
@@ -133,3 +159,38 @@
     </section>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('preview');
+        const previewContainer = document.getElementById('imagePreview');
+        const label = document.querySelector('.custom-file-label');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                previewContainer.style.display = 'block';
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+            label.textContent = input.files[0].name;
+        }
+    }
+
+    $(document).ready(function() {
+        var colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
+        
+        $('#nombreRuta').on('input', function() {
+            var nombre = $(this).val();
+            var colorIndex = nombre.length > 0 ? nombre.charCodeAt(0) % colors.length : 1;
+            var bgColor = colors[colorIndex];
+            
+            $('#rutaIconBox').css('background', 'linear-gradient(135deg, ' + bgColor + ' 0%, ' + bgColor + 'dd 100%)');
+        });
+    });
+</script>
+@endpush

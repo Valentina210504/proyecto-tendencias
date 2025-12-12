@@ -79,16 +79,32 @@
                                                     <i class="fas fa-car text-info mr-1"></i>
                                                     Vehículo <strong style="color:red;">(*)</strong>
                                                 </label>
-                                                <select class="form-control @error('vehiculo_id') is-invalid @enderror"
-                                                    name="vehiculo_id" id="vehiculo_id" required>
-                                                    <option value="">-- Seleccione un vehículo --</option>
-                                                    @foreach ($vehiculos as $vehiculo)
-                                                        <option value="{{ $vehiculo->id }}"
-                                                            {{ old('vehiculo_id', $viaje->vehiculo_id) == $vehiculo->id ? 'selected' : '' }}>
-                                                            {{ $vehiculo->placa }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <div class="d-flex align-items-center">
+                                                    @php
+                                                        $vehiculoActual = $viaje->vehiculo;
+                                                        $imagenActual = $vehiculoActual && $vehiculoActual->imagen ? asset($vehiculoActual->imagen) : '';
+                                                    @endphp
+                                                    <div id="vehiculoImagePreview" class="mr-2" style="{{ $imagenActual ? '' : 'display: none;' }}">
+                                                        <img id="vehiculoImagen" src="{{ $imagenActual }}" alt="Vehículo" 
+                                                             style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                    </div>
+                                                    <div id="vehiculoIconDefault" class="mr-2" style="{{ $imagenActual ? 'display: none;' : '' }}">
+                                                        <div style="width: 50px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                            <i class="fas fa-car"></i>
+                                                        </div>
+                                                    </div>
+                                                    <select class="form-control @error('vehiculo_id') is-invalid @enderror"
+                                                        name="vehiculo_id" id="vehiculo_id" required>
+                                                        <option value="">-- Seleccione un vehículo --</option>
+                                                        @foreach ($vehiculos as $vehiculo)
+                                                            <option value="{{ $vehiculo->id }}"
+                                                                data-imagen="{{ $vehiculo->imagen ? asset($vehiculo->imagen) : '' }}"
+                                                                {{ old('vehiculo_id', $viaje->vehiculo_id) == $vehiculo->id ? 'selected' : '' }}>
+                                                                {{ $vehiculo->placa }} - {{ $vehiculo->marca->nombre ?? '' }} {{ $vehiculo->modelo }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                                 @error('vehiculo_id')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -232,3 +248,36 @@
         </section>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        // Vehiculo
+        $('#vehiculo_id').on('change', function() {
+            var selectedOption = $(this).find('option:selected');
+            var imagen = selectedOption.data('imagen');
+            
+            if (imagen) {
+                $('#vehiculoImagen').attr('src', imagen);
+                $('#vehiculoImagePreview').show();
+                $('#vehiculoIconDefault').hide();
+            } else {
+                $('#vehiculoImagePreview').hide();
+                $('#vehiculoIconDefault').show();
+            }
+        });
+
+        // Automatización Precio Ruta
+        $('select[name="ruta_id"]').on('change', function() {
+            var selectedOption = $(this).find('option:selected');
+            var precio = selectedOption.data('precio');
+            
+            if (precio) {
+                $('#costo_total').val(precio).prop('readonly', true);
+            } else {
+                $('#costo_total').val('').prop('readonly', false);
+            }
+        });
+    });
+</script>
+@endpush

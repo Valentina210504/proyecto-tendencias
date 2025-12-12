@@ -47,6 +47,9 @@
                                             <th class="text-center" style="width: 60px;">
                                                 <i class="fas fa-hashtag text-muted"></i> ID
                                             </th>
+                                            <th class="text-center" style="width: 70px;">
+                                                <i class="fas fa-image text-muted"></i> Imagen
+                                            </th>
                                             <th>
                                                 <i class="fas fa-truck text-muted"></i> Nombre
                                             </th>
@@ -78,6 +81,59 @@
                                         <tr>
                                             <td class="text-center font-weight-bold text-muted">
                                                 {{ $tipo_vehiculo->id }}
+                                            </td>
+                                            <td class="text-center">
+                                                <div style="position: relative; width: 50px; height: 50px; margin: 0 auto;">
+                                                    @if($tipo_vehiculo->imagen && file_exists(public_path($tipo_vehiculo->imagen)))
+                                                        {{-- Mostrar imagen subida --}}
+                                                        <img src="{{ asset($tipo_vehiculo->imagen) }}" alt="{{ $tipo_vehiculo->nombre }}" 
+                                                            style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                    @else
+                                                        {{-- Mostrar ícono por defecto --}}
+                                                        @php
+                                                            $tipoNombre = strtolower($tipo_vehiculo->nombre);
+                                                            // Mapeo de tipos a íconos
+                                                            $iconMap = [
+                                                                'automóvil' => 'fa-car',
+                                                                'automovil' => 'fa-car',
+                                                                'auto' => 'fa-car',
+                                                                'carro' => 'fa-car',
+                                                                'sedan' => 'fa-car-side',
+                                                                'suv' => 'fa-car-side',
+                                                                'camioneta' => 'fa-truck-pickup',
+                                                                'pickup' => 'fa-truck-pickup',
+                                                                'camión' => 'fa-truck',
+                                                                'camion' => 'fa-truck',
+                                                                'bus' => 'fa-bus',
+                                                                'autobús' => 'fa-bus',
+                                                                'autobus' => 'fa-bus',
+                                                                'van' => 'fa-shuttle-van',
+                                                                'furgoneta' => 'fa-shuttle-van',
+                                                                'minivan' => 'fa-shuttle-van',
+                                                                'motocicleta' => 'fa-motorcycle',
+                                                                'moto' => 'fa-motorcycle',
+                                                                'taxi' => 'fa-taxi',
+                                                                'tractor' => 'fa-tractor',
+                                                            ];
+                                                            
+                                                            $icon = 'fa-truck'; // default
+                                                            foreach ($iconMap as $key => $value) {
+                                                                if (strpos($tipoNombre, $key) !== false) {
+                                                                    $icon = $value;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            
+                                                            // Colores por tipo
+                                                            $colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+                                                            $colorIndex = ord(strtoupper(substr($tipo_vehiculo->nombre, 0, 1))) % count($colors);
+                                                            $bgColor = $colors[$colorIndex];
+                                                        @endphp
+                                                        <div style="width: 50px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, {{ $bgColor }} 0%, {{ $bgColor }}dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                            <i class="fas {{ $icon }}"></i>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </td>
                                             <td>
                                                 <span

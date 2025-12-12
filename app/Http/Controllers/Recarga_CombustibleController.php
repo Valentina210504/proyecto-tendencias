@@ -25,7 +25,24 @@ class Recarga_CombustibleController extends Controller
 
     public function store(Recarga_CombustibleRequest $request)
     {
-        $recarga_combustible = Recarga_Combustible::create($request->all());
+        $data = $request->all();
+        
+        // Manejar la subida de imagen
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            
+            $path = public_path('images/recarga_combustibles');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            
+            $imagen->move($path, $nombreImagen);
+            $data['imagen'] = 'images/recarga_combustibles/' . $nombreImagen;
+            Log::info('Imagen guardada en: ' . $data['imagen']);
+        }
+        
+        $recarga_combustible = Recarga_Combustible::create($data);
         return redirect()->route('recarga_combustibles.index')->with('successMsg', 'Recarga Combustible creada con exito');
     }
 
@@ -58,7 +75,29 @@ public function cambioestadorecarga_combustible($id)
     {
         try {
             $recarga_combustible = Recarga_Combustible::findOrFail($id);
-            $recarga_combustible->update($request->all());
+            $data = $request->all();
+            
+            // Manejar la subida de imagen
+            if ($request->hasFile('imagen')) {
+                // Eliminar imagen anterior si existe
+                if ($recarga_combustible->imagen && file_exists(public_path($recarga_combustible->imagen))) {
+                    unlink(public_path($recarga_combustible->imagen));
+                }
+                
+                $imagen = $request->file('imagen');
+                $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+                
+                $path = public_path('images/recarga_combustibles');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                $imagen->move($path, $nombreImagen);
+                $data['imagen'] = 'images/recarga_combustibles/' . $nombreImagen;
+                Log::info('Imagen actualizada: ' . $data['imagen']);
+            }
+            
+            $recarga_combustible->update($data);
             
             return redirect()->route('recarga_combustibles.index')->with('successMsg', 'Recarga actualizada con éxito');
         } catch (Exception $e) {

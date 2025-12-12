@@ -18,6 +18,7 @@ class Recarga_Combustible extends Model
         'precio_litro',
         'costo_total',
         'estacion_servicio',
+        'imagen',
         'estado',
         'registrado_por'
     ];

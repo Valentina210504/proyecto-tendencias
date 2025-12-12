@@ -27,6 +27,8 @@ class RutaRequest extends FormRequest
                 'distancia_en_km'  => 'required|numeric|min:0',
                 'tiempo_estimado' => 'required|date_format:H:i:s',
                 'costo_peaje'      => 'nullable|numeric|min:0',
+                'precio'          => 'nullable|numeric|min:0',
+                'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'estado' => 'required|boolean'
             ];
         }
@@ -47,8 +49,10 @@ class RutaRequest extends FormRequest
                 'nombre_ruta'      => 'required|string|max:255|unique:rutas,nombre_ruta,' . $id,
                 'descripcion'      => 'required|string|max:500',
                 'distancia_en_km'  => 'required|numeric|min:0',
-                'tiempo_estimado'  => 'required', // Relaxed date_format if needed, or keep strict if form sends H:i:s
+                'tiempo_estimado'  => 'required', 
                 'costo_peaje'      => 'nullable|numeric|min:0',
+                'precio'          => 'nullable|numeric|min:0',
+                'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
                 'registrado_por'   => 'sometimes|string|max:255',
                 'estado'           => 'sometimes|boolean'
             ];

@@ -29,10 +29,40 @@ class VehiculoController extends Controller
 
     public function store(VehiculoRequest $request)
     {
-        Vehiculo::create($request->all());
-
-        return redirect()->route('vehiculos.index')
-            ->with('successMsg', 'Vehículo creado con éxito');
+        try {
+            $data = $request->all();
+            Log::info('Request Keys: ' . json_encode(array_keys($data)));
+            Log::info('Has File "imagen"?: ' . ($request->hasFile('imagen') ? 'Yes' : 'No'));
+            Log::info('$_FILES: ' . json_encode($_FILES));
+            
+            // Manejar la subida de imagen
+            if ($request->hasFile('imagen')) {
+                $imagen = $request->file('imagen');
+                $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+                
+                $path = public_path('images/vehiculos');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                $imagen->move($path, $nombreImagen);
+                $data['imagen'] = 'images/vehiculos/' . $nombreImagen;
+                Log::info('Imagen guardada en: ' . $data['imagen']);
+            } else {
+                Log::info('No se recibió archivo de imagen');
+            }
+            
+            $vehiculo = Vehiculo::create($data);
+            Log::info('Vehiculo creado ID: ' . $vehiculo->id . ' con imagen: ' . $vehiculo->imagen);
+            
+            return redirect()->route('vehiculos.index')
+                ->with('successMsg', 'Vehículo creado con éxito');
+        } catch (Exception $e) {
+            Log::error('Error al crear vehículo: ' . $e->getMessage());
+            return redirect()->back()
+                ->withInput()
+                ->with('errorMsg', 'Error al crear el vehículo: ' . $e->getMessage());
+        }
     }
 
     public function cambioestadovehiculo($id)
@@ -63,14 +93,22 @@ class VehiculoController extends Controller
             $data = $request->all();
 
             if ($request->hasFile('imagen')) {
-                if ($vehiculo->imagen && file_exists(public_path('uploads/vehiculos/' . $vehiculo->imagen))) {
-                    unlink(public_path('uploads/vehiculos/' . $vehiculo->imagen));
+                // Eliminar imagen anterior si existe
+                if ($vehiculo->imagen && file_exists(public_path($vehiculo->imagen))) {
+                    unlink(public_path($vehiculo->imagen));
                 }
 
-                $file = $request->file('imagen');
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('uploads/vehiculos'), $filename);
-                $data['imagen'] = $filename;
+                $imagen = $request->file('imagen');
+                $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+                
+                $path = public_path('images/vehiculos');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                $imagen->move($path, $nombreImagen);
+                $data['imagen'] = 'images/vehiculos/' . $nombreImagen;
+                Log::info('Imagen actualizada: ' . $data['imagen']);
             }
 
             $vehiculo->update($data);

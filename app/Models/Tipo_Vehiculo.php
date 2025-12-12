@@ -20,6 +20,7 @@ class Tipo_Vehiculo extends Model
         'capacidad_pasajero',
         'capacidad_carga',
         'capacidad_gasolina',
+        'imagen',
         'estado',
         'registrado_por'
     ];

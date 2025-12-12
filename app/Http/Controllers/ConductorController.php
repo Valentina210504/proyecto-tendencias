@@ -24,7 +24,23 @@ class ConductorController extends Controller
 
     public function store(ConductorRequest $request)
     {
-        $conductor = Conductor::create($request->all());
+        $data = $request->all();
+        
+        // Manejar la imagen
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            
+            $path = public_path('images/conductores');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            
+            $imagen->move($path, $nombreImagen);
+            $data['imagen'] = 'images/conductores/' . $nombreImagen;
+        }
+        
+        $conductor = Conductor::create($data);
         return redirect()->route('conductores.index')->with('successMsg', 'Conductor creado con éxito');
     }
 
@@ -55,9 +71,28 @@ class ConductorController extends Controller
     {
         try {
             $conductor = Conductor::findOrFail($id);
-            // update() filtrará automáticamente los campos basándose en $fillable en el modelo
-            // y los datos presentes en el request.
-            $conductor->update($request->all());
+            $data = $request->all();
+            
+            // Manejar la imagen
+            if ($request->hasFile('imagen')) {
+                // Eliminar imagen anterior si existe
+                if ($conductor->imagen && file_exists(public_path($conductor->imagen))) {
+                    unlink(public_path($conductor->imagen));
+                }
+                
+                $imagen = $request->file('imagen');
+                $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+                
+                $path = public_path('images/conductores');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                $imagen->move($path, $nombreImagen);
+                $data['imagen'] = 'images/conductores/' . $nombreImagen;
+            }
+            
+            $conductor->update($data);
             
             return redirect()->route('conductores.index')->with('successMsg', 'Conductor actualizado con éxito');
         } catch (Exception $e) {

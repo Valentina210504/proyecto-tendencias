@@ -17,6 +17,7 @@ class Licencia extends Model
         'fecha_expedicion',
         'fecha_vencimiento',
         'entidad_emisora',
+        'imagen',
         'estado',
         'registrado_por',
     ];

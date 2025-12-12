@@ -24,7 +24,23 @@ class EmpresaController extends Controller
 
     public function store(EmpresaRequest $request)
     {
-        $empresa = Empresa::create($request->all());
+        $data = $request->all();
+        
+        // Manejar la imagen
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            
+            $path = public_path('images/empresas');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            
+            $imagen->move($path, $nombreImagen);
+            $data['imagen'] = 'images/empresas/' . $nombreImagen;
+        }
+        
+        $empresa = Empresa::create($data);
         return redirect()->route('empresas.index')->with('successMsg', 'Empresa creada con éxito');
     }
 
@@ -55,7 +71,28 @@ class EmpresaController extends Controller
     {
         try {
             $empresa = Empresa::findOrFail($id);
-            $empresa->update($request->all());
+            $data = $request->all();
+            
+            // Manejar la imagen
+            if ($request->hasFile('imagen')) {
+                // Eliminar imagen anterior si existe
+                if ($empresa->imagen && file_exists(public_path($empresa->imagen))) {
+                    unlink(public_path($empresa->imagen));
+                }
+                
+                $imagen = $request->file('imagen');
+                $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+                
+                $path = public_path('images/empresas');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                $imagen->move($path, $nombreImagen);
+                $data['imagen'] = 'images/empresas/' . $nombreImagen;
+            }
+            
+            $empresa->update($data);
             
             return redirect()->route('empresas.index')->with('successMsg', 'Empresa actualizada con éxito');
         } catch (Exception $e) {

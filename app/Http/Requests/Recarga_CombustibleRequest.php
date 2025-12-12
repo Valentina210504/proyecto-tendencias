@@ -28,6 +28,7 @@ class Recarga_CombustibleRequest extends FormRequest
                 'precio_litro' => 'required|numeric|min:0',
                 'costo_total' => 'required|numeric|min:0',
                 'estacion_servicio' => 'required|string|max:255',
+                'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'estado' => 'required|boolean'
             ];
         } elseif (request()->isMethod('put') || request()->isMethod('patch')) {
@@ -37,6 +38,7 @@ class Recarga_CombustibleRequest extends FormRequest
                 'precio_litro' => 'required|numeric|min:0',
                 'costo_total' => 'required|numeric|min:0',
                 'estacion_servicio' => 'required|string|max:255',
+                'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
                 'registrado_por' => 'sometimes|string|max:255',
                 'estado' => 'sometimes|boolean'
             ];

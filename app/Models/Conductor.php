@@ -16,6 +16,7 @@ class Conductor extends Model
         'nombre',
         'apellido',
         'documento',
+        'imagen',
         'fecha_contrato',
         'estado',
         'registrado_por',

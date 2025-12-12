@@ -47,6 +47,9 @@
                                             <th class="text-center" style="width: 60px;">
                                                 <i class="fas fa-hashtag text-muted"></i> ID
                                             </th>
+                                            <th class="text-center" style="width: 70px;">
+                                                <i class="fas fa-image text-muted"></i> Imagen
+                                            </th>
                                             <th>
                                                 <i class="fas fa-car text-muted"></i> Vehículo (Placa)
                                             </th>
@@ -84,6 +87,34 @@
                                         <tr>
                                             <td class="text-center font-weight-bold text-muted">
                                                 {{ $viaje->id }}
+                                            </td>
+                                            <td class="text-center">
+                                                <div style="position: relative; width: 50px; height: 50px; margin: 0 auto;">
+                                                    @php
+                                                        $vehiculo = $viaje->vehiculo;
+                                                        $marcaNombre = $vehiculo->marca->nombre ?? 'N/A';
+                                                        $hasUploadedImage = $vehiculo && !empty($vehiculo->imagen) && file_exists(public_path($vehiculo->imagen));
+                                                        
+                                                        // Imagen local basada en la marca
+                                                        $marcaSlug = strtolower(str_replace(' ', '-', $marcaNombre));
+                                                        $imagenMarca = "img/vehiculos/{$marcaSlug}.png";
+                                                        $hasLocalImage = file_exists(public_path($imagenMarca));
+                                                    @endphp
+                                                    
+                                                    @if($hasUploadedImage)
+                                                        <img src="{{ asset($vehiculo->imagen) }}" 
+                                                             alt="{{ $marcaNombre }}" 
+                                                             style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                    @elseif($hasLocalImage)
+                                                        <img src="{{ asset($imagenMarca) }}" 
+                                                             alt="{{ $marcaNombre }}" 
+                                                             style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                    @else
+                                                        <div style="width: 50px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                            <i class="fas fa-car"></i>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </td>
                                             <td>
                                                 <span class="font-weight-bold text-dark">

@@ -47,6 +47,9 @@
                                             <th class="text-center" style="width: 60px;">
                                                 <i class="fas fa-hashtag text-muted"></i> ID
                                             </th>
+                                            <th class="text-center" style="width: 70px;">
+                                                <i class="fas fa-image text-muted"></i>
+                                            </th>
                                             <th>
                                                 <i class="fas fa-id-card text-muted"></i> Número Licencia
                                             </th>
@@ -78,6 +81,23 @@
                                         <tr>
                                             <td class="text-center font-weight-bold text-muted">
                                                 {{ $licencia->id }}
+                                            </td>
+                                            <td class="text-center">
+                                                @if($licencia->imagen && file_exists(public_path($licencia->imagen)))
+                                                    {{-- Mostrar imagen subida --}}
+                                                    <img src="{{ asset($licencia->imagen) }}" alt="Licencia {{ $licencia->numero_licencia }}" 
+                                                        style="width: 70px; height: 50px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 0 auto; display: block;">
+                                                @else
+                                                    {{-- Mostrar ícono por defecto --}}
+                                                    @php
+                                                        $colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+                                                        $colorIndex = $licencia->id % count($colors);
+                                                        $bgColor = $colors[$colorIndex];
+                                                    @endphp
+                                                    <div style="width: 50px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, {{ $bgColor }} 0%, {{ $bgColor }}dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 0 auto;">
+                                                        <i class="fas fa-id-card"></i>
+                                                    </div>
+                                                @endif
                                             </td>
                                             <td>
                                                 <span

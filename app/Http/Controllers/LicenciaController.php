@@ -24,7 +24,23 @@ class LicenciaController extends Controller
 
     public function store(LicenciaRequest $request)
     {
-        $licencia = Licencia::create($request->all());
+        $data = $request->all();
+        
+        // Manejar la imagen
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+            
+            $path = public_path('images/licencias');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            
+            $imagen->move($path, $nombreImagen);
+            $data['imagen'] = 'images/licencias/' . $nombreImagen;
+        }
+        
+        $licencia = Licencia::create($data);
         return redirect()->route('licencias.index')->with('successMsg', 'Licencia creada con éxito');
     }
 
@@ -55,7 +71,29 @@ class LicenciaController extends Controller
     {
         try {
             $licencia = Licencia::findOrFail($id);
-            $licencia->update($request->all());
+            $data = $request->all();
+            
+            // Manejar la subida de imagen
+            if ($request->hasFile('imagen')) {
+                // Eliminar imagen anterior si existe
+                if ($licencia->imagen && file_exists(public_path($licencia->imagen))) {
+                    unlink(public_path($licencia->imagen));
+                }
+                
+                $imagen = $request->file('imagen');
+                $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+                
+                $path = public_path('images/licencias');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                $imagen->move($path, $nombreImagen);
+                $data['imagen'] = 'images/licencias/' . $nombreImagen;
+                Log::info('Imagen actualizada: ' . $data['imagen']);
+            }
+            
+            $licencia->update($data);
             
             return redirect()->route('licencias.index')->with('successMsg', 'Licencia actualizada con éxito');
         } catch (Exception $e) {

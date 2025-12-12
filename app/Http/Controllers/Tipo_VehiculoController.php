@@ -24,8 +24,32 @@ class Tipo_VehiculoController extends Controller
 
     public function store(Tipo_VehiculoRequest $request)
     {
-        $tipo_vehiculo = Tipo_Vehiculo::create($request->all());
-        return redirect()->route('tipo_vehiculos.index')->with('successMsg', 'Tipo de Vehículo creado con éxito');
+        try {
+            $data = $request->all();
+            
+            // Manejar la subida de imagen
+            if ($request->hasFile('imagen')) {
+                $imagen = $request->file('imagen');
+                $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+                
+                $path = public_path('images/tipo_vehiculos');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                $imagen->move($path, $nombreImagen);
+                $data['imagen'] = 'images/tipo_vehiculos/' . $nombreImagen;
+                Log::info('Imagen guardada en: ' . $data['imagen']);
+            }
+            
+            $tipo_vehiculo = Tipo_Vehiculo::create($data);
+            return redirect()->route('tipo_vehiculos.index')->with('successMsg', 'Tipo de Vehículo creado con éxito');
+        } catch (Exception $e) {
+            Log::error('Error al crear tipo de vehículo: ' . $e->getMessage());
+            return redirect()->back()
+                ->withInput()
+                ->with('errorMsg', 'Error al crear el tipo de vehículo: ' . $e->getMessage());
+        }
     }
 
     public function cambioestadotipo_vehiculo($id)  
@@ -55,7 +79,29 @@ class Tipo_VehiculoController extends Controller
     {
         try {
             $tipo_vehiculo = Tipo_Vehiculo::findOrFail($id);
-            $tipo_vehiculo->update($request->all());
+            $data = $request->all();
+            
+            // Manejar la subida de imagen
+            if ($request->hasFile('imagen')) {
+                // Eliminar imagen anterior si existe
+                if ($tipo_vehiculo->imagen && file_exists(public_path($tipo_vehiculo->imagen))) {
+                    unlink(public_path($tipo_vehiculo->imagen));
+                }
+                
+                $imagen = $request->file('imagen');
+                $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+                
+                $path = public_path('images/tipo_vehiculos');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                $imagen->move($path, $nombreImagen);
+                $data['imagen'] = 'images/tipo_vehiculos/' . $nombreImagen;
+                Log::info('Imagen actualizada: ' . $data['imagen']);
+            }
+            
+            $tipo_vehiculo->update($data);
             
             return redirect()->route('tipo_vehiculos.index')->with('successMsg', 'Tipo de Vehículo actualizado con éxito');
         } catch (Exception $e) {

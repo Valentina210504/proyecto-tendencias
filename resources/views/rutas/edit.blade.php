@@ -26,7 +26,7 @@
                                 </h3>
                             </div>
 
-                            <form method="POST" action="{{ route('rutas.update', $ruta->id) }}">
+                            <form method="POST" action="{{ route('rutas.update', $ruta->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="card-body">
@@ -149,6 +149,62 @@
                                                 @enderror
                                             </div>
                                         </div>
+
+                                        {{-- Precio del Viaje --}}
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="precio">
+                                                    <i class="fas fa-money-bill-wave text-success mr-1"></i>
+                                                    Precio del Viaje <strong style="color:red;">(*)</strong>
+                                                </label>
+                                                <input type="number"
+                                                    class="form-control @error('precio') is-invalid @enderror"
+                                                    name="precio" id="precio"
+                                                    value="{{ old('precio', $ruta->precio) }}"
+                                                    placeholder="Ej: 50000" min="0" step="0.01" required>
+                                                @error('precio')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        {{-- IMAGEN/LOGO DE LA RUTA --}}
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    <i class="fas fa-image text-info mr-1"></i>
+                                                    Logo de la Ruta
+                                                </label>
+                                                
+                                                @if($ruta->imagen)
+                                                    <div class="mb-3">
+                                                        <p class="text-muted mb-2">Imagen actual:</p>
+                                                        <img src="{{ asset($ruta->imagen) }}" alt="Imagen actual" 
+                                                            style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                    </div>
+                                                @endif
+                                                
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="imagenRuta" 
+                                                        name="imagen" accept="image/*" onchange="previewImage(event)">
+                                                    <label class="custom-file-label" for="imagenRuta">
+                                                        {{ $ruta->imagen ? 'Cambiar imagen...' : 'Seleccionar imagen...' }}
+                                                    </label>
+                                                </div>
+                                                <small class="form-text text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB</small>
+                                                
+                                                {{-- Preview --}}
+                                                <div id="imagePreview" class="mt-3" style="display: none;">
+                                                    <p class="text-muted mb-2">Nueva imagen:</p>
+                                                    <img id="preview" src="" alt="Preview" 
+                                                        style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     {{-- Campo oculto --}}
@@ -181,3 +237,26 @@
         </section>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('preview');
+        const previewContainer = document.getElementById('imagePreview');
+        const label = document.querySelector('.custom-file-label');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                previewContainer.style.display = 'block';
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+            label.textContent = input.files[0].name;
+        }
+    }
+</script>
+@endpush

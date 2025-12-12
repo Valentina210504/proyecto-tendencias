@@ -30,7 +30,7 @@ class ViajeRequest extends FormRequest
                 'descripcion' => 'nullable|string|max:500',
                 'recorrido' => 'required|numeric|min:0',
                 'tiempo_estimado' => 'required|date_format:H:i:s',
-                'costo_total' => 'required|numeric|min:0',
+                'costo_total' => 'nullable|numeric|min:0',
                 'estado' => 'required|boolean',
             ];
         }
@@ -51,7 +51,7 @@ class ViajeRequest extends FormRequest
                 'descripcion'    => 'nullable|string|max:500',
                 'recorrido'      => 'required|numeric|min:0',
                 'tiempo_estimado' => 'required', 
-                'costo_total'    => 'required|numeric|min:0',
+                'costo_total'    => 'nullable|numeric|min:0',
                 'registrado_por' => 'sometimes|string|max:255',
                 'estado'         => 'sometimes|boolean',
             ];

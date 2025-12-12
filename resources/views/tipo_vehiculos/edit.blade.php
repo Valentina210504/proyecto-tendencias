@@ -26,7 +26,7 @@
                                 </h3>
                             </div>
 
-                            <form method="POST" action="{{ route('tipo_vehiculos.update', $tipo_vehiculo->id) }}">
+                            <form method="POST" action="{{ route('tipo_vehiculos.update', $tipo_vehiculo->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="card-body">
@@ -54,10 +54,41 @@
                                                     <i class="fas fa-tag text-primary mr-1"></i>
                                                     Nombre <strong style="color:red;">(*)</strong>
                                                 </label>
-                                                <input type="text"
-                                                    class="form-control @error('nombre') is-invalid @enderror"
-                                                    name="nombre" id="nombre" value="{{ old('nombre', $tipo_vehiculo->nombre) }}"
-                                                    placeholder="Ej: Sedán" required>
+                                                <div class="d-flex align-items-center">
+                                                    @php
+                                                        $tipoNombre = strtolower($tipo_vehiculo->nombre);
+                                                        $iconMapPHP = [
+                                                            'automóvil' => 'fa-car', 'automovil' => 'fa-car', 'auto' => 'fa-car', 'carro' => 'fa-car',
+                                                            'sedan' => 'fa-car-side', 'suv' => 'fa-car-side',
+                                                            'camioneta' => 'fa-truck-pickup', 'pickup' => 'fa-truck-pickup',
+                                                            'camión' => 'fa-truck', 'camion' => 'fa-truck',
+                                                            'bus' => 'fa-bus', 'autobús' => 'fa-bus', 'autobus' => 'fa-bus',
+                                                            'van' => 'fa-shuttle-van', 'furgoneta' => 'fa-shuttle-van', 'minivan' => 'fa-shuttle-van',
+                                                            'motocicleta' => 'fa-motorcycle', 'moto' => 'fa-motorcycle',
+                                                            'taxi' => 'fa-taxi', 'tractor' => 'fa-tractor',
+                                                        ];
+                                                        $iconInicial = 'fa-truck';
+                                                        foreach ($iconMapPHP as $key => $value) {
+                                                            if (strpos($tipoNombre, $key) !== false) {
+                                                                $iconInicial = $value;
+                                                                break;
+                                                            }
+                                                        }
+                                                        $colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+                                                        $colorIndex = ord(strtoupper(substr($tipo_vehiculo->nombre, 0, 1))) % count($colors);
+                                                        $bgColor = $colors[$colorIndex];
+                                                    @endphp
+                                                    <div id="tipoIconPreview" class="mr-3">
+                                                        <div id="tipoIconBox" style="width: 60px; height: 60px; border-radius: 8px; background: linear-gradient(135deg, {{ $bgColor }} 0%, {{ $bgColor }}dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                            <i id="tipoIcon" class="fas {{ $iconInicial }}"></i>
+                                                        </div>
+                                                    </div>
+                                                    <input type="text"
+                                                        class="form-control @error('nombre') is-invalid @enderror"
+                                                        name="nombre" id="nombre" value="{{ old('nombre', $tipo_vehiculo->nombre) }}"
+                                                        placeholder="Ej: Sedán, Bus, Camión, SUV, Van" required>
+                                                </div>
+                                                <small class="form-text text-muted">El ícono cambiará automáticamente según el tipo</small>
                                                 @error('nombre')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -148,6 +179,42 @@
                                         </div>
                                     </div>
 
+                                    <div class="row">
+                                        {{-- IMAGEN/LOGO DEL TIPO DE VEHÍCULO --}}
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    <i class="fas fa-image text-info mr-1"></i>
+                                                    Logo del Tipo de Vehículo
+                                                </label>
+                                                
+                                                @if($tipo_vehiculo->imagen)
+                                                    <div class="mb-3">
+                                                        <p class="text-muted mb-2">Imagen actual:</p>
+                                                        <img src="{{ asset($tipo_vehiculo->imagen) }}" alt="Imagen actual" 
+                                                            style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                    </div>
+                                                @endif
+                                                
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="imagenTipoVehiculo" 
+                                                        name="imagen" accept="image/*" onchange="previewImage(event)">
+                                                    <label class="custom-file-label" for="imagenTipoVehiculo">
+                                                        {{ $tipo_vehiculo->imagen ? 'Cambiar imagen...' : 'Seleccionar imagen...' }}
+                                                    </label>
+                                                </div>
+                                                <small class="form-text text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB</small>
+                                                
+                                                {{-- Preview --}}
+                                                <div id="imagePreview" class="mt-3" style="display: none;">
+                                                    <p class="text-muted mb-2">Nueva imagen:</p>
+                                                    <img id="preview" src="" alt="Preview" 
+                                                        style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     {{-- Campo oculto --}}
                                     <input type="hidden" name="estado" value="{{ old('estado', $tipo_vehiculo->estado ? 1 : 0) }}">
                                     <input type="hidden" name="registrado_por" value="{{ $tipo_vehiculo->registrado_por }}">
@@ -178,3 +245,59 @@
         </section>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('preview');
+        const previewContainer = document.getElementById('imagePreview');
+        const label = document.querySelector('.custom-file-label');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                previewContainer.style.display = 'block';
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+            label.textContent = input.files[0].name;
+        }
+    }
+
+    $(document).ready(function() {
+        var iconMap = {
+            'automóvil': 'fa-car', 'automovil': 'fa-car', 'auto': 'fa-car', 'carro': 'fa-car',
+            'sedan': 'fa-car-side', 'suv': 'fa-car-side',
+            'camioneta': 'fa-truck-pickup', 'pickup': 'fa-truck-pickup',
+            'camión': 'fa-truck', 'camion': 'fa-truck',
+            'bus': 'fa-bus', 'autobús': 'fa-bus', 'autobus': 'fa-bus',
+            'van': 'fa-shuttle-van', 'furgoneta': 'fa-shuttle-van', 'minivan': 'fa-shuttle-van',
+            'motocicleta': 'fa-motorcycle', 'moto': 'fa-motorcycle',
+            'taxi': 'fa-taxi', 'tractor': 'fa-tractor'
+        };
+        
+        var colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+        
+        $('#nombre').on('input', function() {
+            var nombre = $(this).val().toLowerCase();
+            var icon = 'fa-truck';
+            
+            for (var key in iconMap) {
+                if (nombre.indexOf(key) !== -1) {
+                    icon = iconMap[key];
+                    break;
+                }
+            }
+            
+            var colorIndex = nombre.length > 0 ? nombre.charCodeAt(0) % colors.length : 0;
+            var bgColor = colors[colorIndex];
+            
+            $('#tipoIcon').removeClass().addClass('fas ' + icon);
+            $('#tipoIconBox').css('background', 'linear-gradient(135deg, ' + bgColor + ' 0%, ' + bgColor + 'dd 100%)');
+        });
+    });
+</script>
+@endpush

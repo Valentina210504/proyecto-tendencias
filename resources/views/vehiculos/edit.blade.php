@@ -211,6 +211,7 @@
                                                    autocomplete="off"
                                                    value="{{ old('kilometraje', $vehiculo->kilometraje) }}" 
                                                    min="0"
+                                                   step="0.01"
                                                    required>
                                             <small class="form-text text-muted">En kilómetros</small>
                                             @error('kilometraje')
@@ -237,10 +238,10 @@
                                             </label>
                                             
                                             {{-- Mostrar imagen actual --}}
-                                            @if($vehiculo->imagen && file_exists(public_path('uploads/vehiculos/'.$vehiculo->imagen)))
+                                            @if($vehiculo->imagen && file_exists(public_path($vehiculo->imagen)))
                                                 <div class="mb-3">
                                                     <p class="text-muted mb-2">Imagen actual:</p>
-                                                    <img src="{{ asset('uploads/vehiculos/'.$vehiculo->imagen) }}" 
+                                                    <img src="{{ asset($vehiculo->imagen) }}" 
                                                          alt="Imagen actual" 
                                                          class="img-fluid" 
                                                          style="max-width: 300px; height: auto; border: 1px solid #ddd; border-radius: 5px;">

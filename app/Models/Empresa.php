@@ -18,6 +18,7 @@ class Empresa extends Model
         'direccion',
         'telefono',
         'email',
+        'imagen',
         'estado',
         'registrado_por'
     ];

@@ -17,6 +17,8 @@ class Ruta extends Model
         'distancia_en_km',
         'tiempo_estimado',
         'costo_peaje',
+        'precio',
+        'imagen',
         'estado',
         'registrado_por',
     ];

@@ -27,6 +27,7 @@ class LicenciaRequest extends FormRequest
                 'fecha_expedicion'    => 'required|date',
                 'fecha_vencimiento'   => 'required|date|after:fecha_expedicion',
                 'entidad_emisora'     => 'required|string|max:255',
+                'imagen'              => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'estado' => 'required|boolean'
             ];
 
@@ -46,6 +47,7 @@ class LicenciaRequest extends FormRequest
                 'fecha_expedicion'    => 'required|date',
                 'fecha_vencimiento'   => 'required|date|after:fecha_expedicion',
                 'entidad_emisora'     => 'required|string|max:255',
+                'imagen'              => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
                 'registrado_por'      => 'sometimes|string|max:255',
                 'estado'              => 'sometimes|boolean'
             ];

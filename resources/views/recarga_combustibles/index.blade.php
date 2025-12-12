@@ -47,6 +47,9 @@
                                             <th class="text-center" style="width: 60px;">
                                                 <i class="fas fa-hashtag text-muted"></i> ID
                                             </th>
+                                            <th class="text-center" style="width: 70px;">
+                                                <i class="fas fa-image text-muted"></i>
+                                            </th>
                                             <th class="text-center">
                                                 <i class="fas fa-tint text-muted"></i> Litros
                                             </th>
@@ -75,6 +78,17 @@
                                         <tr>
                                             <td class="text-center font-weight-bold text-muted">
                                                 {{ $recarga->id }}
+                                            </td>
+                                            <td class="text-center">
+                                                @php
+                                                    // Color basado en la estación o ID
+                                                    $colors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899'];
+                                                    $colorIndex = $recarga->id % count($colors);
+                                                    $bgColor = $colors[$colorIndex];
+                                                @endphp
+                                                <div style="width: 50px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, {{ $bgColor }} 0%, {{ $bgColor }}dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 0 auto;">
+                                                    <i class="fas fa-gas-pump"></i>
+                                                </div>
                                             </td>
                                             <td class="text-center">
                                                 <span class="badge badge-info px-3 py-2">

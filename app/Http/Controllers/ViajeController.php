@@ -33,6 +33,11 @@ class ViajeController extends Controller
         {
             
             $request['tiempo_estimado'] = now()->format('Y-m-d') . ' ' . $request->tiempo_estimado;
+            
+            // Si costo_total viene nulo (ej. ruta sin precio y usuario no llenó), asignar 0
+            if (!$request->filled('costo_total')) {
+                $request->merge(['costo_total' => 0]);
+            }
 
             Viaje::create($request->all());
 

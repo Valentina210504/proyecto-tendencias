@@ -17,7 +17,7 @@
                             <h3>@yield('title')</h3>
                         </div>
 
-                        <form method="POST" action="{{ route('vehiculos.store') }}">
+                        <form method="POST" action="{{ route('vehiculos.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
 
@@ -88,6 +88,21 @@
                                     <input type="number" step="0.01" name="kilometraje" class="form-control" required>
                                 </div>
 
+                                {{-- IMAGEN/LOGO DEL VEHÍCULO --}}
+                                <div class="form-group">
+                                    <label>Logo del Vehículo</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="imagenVehiculo" name="imagen" accept="image/*" onchange="previewImage(event)">
+                                        <label class="custom-file-label" for="imagenVehiculo">Seleccionar imagen...</label>
+                                    </div>
+                                    <small class="form-text text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB</small>
+                                    
+                                    {{-- Preview --}}
+                                    <div id="imagePreview" class="mt-3" style="display: none;">
+                                        <img id="preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                    </div>
+                                </div>
+
                                 {{-- HIDDEN --}}
                                 <input type="hidden" name="estado" value="1">
                                 <input type="hidden" name="registrado_por" value="{{ Auth::user()->name }}">
@@ -117,3 +132,26 @@
     </section>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('preview');
+        const previewContainer = document.getElementById('imagePreview');
+        const label = document.querySelector('.custom-file-label');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                previewContainer.style.display = 'block';
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+            label.textContent = input.files[0].name;
+        }
+    }
+</script>
+@endpush
