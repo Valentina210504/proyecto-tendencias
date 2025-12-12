@@ -27,7 +27,7 @@ class Recarga_CombustibleController extends Controller
     {
         $data = $request->all();
         
-        // Manejar la subida de imagen
+        
         if ($request->hasFile('imagen')) {
             $imagen = $request->file('imagen');
             $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
@@ -77,9 +77,9 @@ public function cambioestadorecarga_combustible($id)
             $recarga_combustible = Recarga_Combustible::findOrFail($id);
             $data = $request->all();
             
-            // Manejar la subida de imagen
+          
             if ($request->hasFile('imagen')) {
-                // Eliminar imagen anterior si existe
+                
                 if ($recarga_combustible->imagen && file_exists(public_path($recarga_combustible->imagen))) {
                     unlink(public_path($recarga_combustible->imagen));
                 }

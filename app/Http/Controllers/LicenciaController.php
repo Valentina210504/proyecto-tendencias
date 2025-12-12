@@ -26,7 +26,7 @@ class LicenciaController extends Controller
     {
         $data = $request->all();
         
-        // Manejar la imagen
+       
         if ($request->hasFile('imagen')) {
             $imagen = $request->file('imagen');
             $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
@@ -73,9 +73,9 @@ class LicenciaController extends Controller
             $licencia = Licencia::findOrFail($id);
             $data = $request->all();
             
-            // Manejar la subida de imagen
+            
             if ($request->hasFile('imagen')) {
-                // Eliminar imagen anterior si existe
+                
                 if ($licencia->imagen && file_exists(public_path($licencia->imagen))) {
                     unlink(public_path($licencia->imagen));
                 }

@@ -29,7 +29,7 @@ class MarcaRequest extends FormRequest
                 'estado' => 'required|boolean'
             ];
         } elseif (request()->isMethod('put') || request()->isMethod('patch')) {
-            // Intentar obtener el parámetro 'marca' o cualquiera disponible en la ruta
+            
             $marca = $this->route('marca');
             
             if (!$marca && count($this->route()->parameters()) > 0) {

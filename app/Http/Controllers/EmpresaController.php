@@ -26,7 +26,7 @@ class EmpresaController extends Controller
     {
         $data = $request->all();
         
-        // Manejar la imagen
+     
         if ($request->hasFile('imagen')) {
             $imagen = $request->file('imagen');
             $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
@@ -73,9 +73,9 @@ class EmpresaController extends Controller
             $empresa = Empresa::findOrFail($id);
             $data = $request->all();
             
-            // Manejar la imagen
+            
             if ($request->hasFile('imagen')) {
-                // Eliminar imagen anterior si existe
+                
                 if ($empresa->imagen && file_exists(public_path($empresa->imagen))) {
                     unlink(public_path($empresa->imagen));
                 }

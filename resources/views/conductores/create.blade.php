@@ -51,13 +51,15 @@
                                     <div class="col-12 mb-3">
                                         <div class="d-flex align-items-center">
                                             <div id="conductorAvatarPreview" class="mr-3">
-                                                <div id="conductorAvatarBox" style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, #10b981 0%, #10b981dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                <div id="conductorAvatarBox"
+                                                    style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, #10b981 0%, #10b981dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                                     <span id="conductorIniciales">--</span>
                                                 </div>
                                             </div>
                                             <div>
                                                 <h5 class="mb-0">Datos del Conductor</h5>
-                                                <small class="text-muted">Las iniciales se actualizarán automáticamente</small>
+                                                <small class="text-muted">Las iniciales se actualizarán
+                                                    automáticamente</small>
                                             </div>
                                         </div>
                                     </div>
@@ -107,20 +109,24 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label class="control-label"><i class="fas fa-camera text-info mr-1"></i>Foto del Conductor</label>
+                                            <label class="control-label"><i
+                                                    class="fas fa-camera text-info mr-1"></i>Foto del Conductor</label>
                                             <div class="d-flex align-items-center">
                                                 <div id="imagenPreview" class="mr-3" style="display: none;">
-                                                    <img id="imagenPreviewImg" src="" alt="Vista previa" 
-                                                         style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                    <img id="imagenPreviewImg" src="" alt="Vista previa"
+                                                        style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                                 </div>
                                                 <div id="imagenPlaceholder" class="mr-3">
-                                                    <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%); display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 28px;">
+                                                    <div
+                                                        style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%); display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 28px;">
                                                         <i class="fas fa-user"></i>
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <input type="file" name="imagen" id="imagenInput" class="form-control-file" accept="image/*">
-                                                    <small class="form-text text-muted">Formatos: JPG, PNG, GIF. Tamaño máximo: 2MB</small>
+                                                    <input type="file" name="imagen" id="imagenInput"
+                                                        class="form-control-file" accept="image/*">
+                                                    <small class="form-text text-muted">Formatos: JPG, PNG, GIF. Tamaño
+                                                        máximo: 2MB</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -160,38 +166,39 @@
 
 @push('scripts')
 <script>
-    $(document).ready(function() {
-        var colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
-        
-        function updateAvatar() {
-            var nombre = $('#nombre').val().toUpperCase();
-            var apellido = $('#apellido').val().toUpperCase();
-            var iniciales = (nombre.charAt(0) || '-') + (apellido.charAt(0) || '-');
-            var colorIndex = nombre.length > 0 ? nombre.charCodeAt(0) % colors.length : 0;
-            var bgColor = colors[colorIndex];
-            
-            $('#conductorIniciales').text(iniciales);
-            $('#conductorAvatarBox').css('background', 'linear-gradient(135deg, ' + bgColor + ' 0%, ' + bgColor + 'dd 100%)');
-        }
-        
-        $('#nombre, #apellido').on('input', updateAvatar);
-        
-        // Vista previa de imagen
-        $('#imagenInput').on('change', function() {
-            var file = this.files[0];
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#imagenPreviewImg').attr('src', e.target.result);
-                    $('#imagenPreview').show();
-                    $('#imagenPlaceholder').hide();
-                }
-                reader.readAsDataURL(file);
-            } else {
-                $('#imagenPreview').hide();
-                $('#imagenPlaceholder').show();
+$(document).ready(function() {
+    var colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
+
+    function updateAvatar() {
+        var nombre = $('#nombre').val().toUpperCase();
+        var apellido = $('#apellido').val().toUpperCase();
+        var iniciales = (nombre.charAt(0) || '-') + (apellido.charAt(0) || '-');
+        var colorIndex = nombre.length > 0 ? nombre.charCodeAt(0) % colors.length : 0;
+        var bgColor = colors[colorIndex];
+
+        $('#conductorIniciales').text(iniciales);
+        $('#conductorAvatarBox').css('background', 'linear-gradient(135deg, ' + bgColor + ' 0%, ' + bgColor +
+            'dd 100%)');
+    }
+
+    $('#nombre, #apellido').on('input', updateAvatar);
+
+
+    $('#imagenInput').on('change', function() {
+        var file = this.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imagenPreviewImg').attr('src', e.target.result);
+                $('#imagenPreview').show();
+                $('#imagenPlaceholder').hide();
             }
-        });
+            reader.readAsDataURL(file);
+        } else {
+            $('#imagenPreview').hide();
+            $('#imagenPlaceholder').show();
+        }
     });
+});
 </script>
 @endpush

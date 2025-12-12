@@ -14,12 +14,10 @@ class VehiculoRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Validation rules for store & update
-     */
+   
     public function rules(): array
     {
-        // Crear (POST)
+       
         if ($this->isMethod('post')) {
             return [
                 'marca_id'          => 'required|exists:marcas,id',

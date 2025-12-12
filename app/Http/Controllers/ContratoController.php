@@ -34,9 +34,7 @@ class ContratoController extends Controller
         try {
             $contrato = Contrato::findOrFail($id);
             Log::info("Intento de cambio de estado contrato ID: {$id}. Estado actual: {$contrato->estado}");
-            
-            // Toggle: activo <-> inactivo
-            // Normalizar a minúsculas por si acaso
+           
             $estadoActual = strtolower($contrato->estado);
             
             $contrato->estado = ($estadoActual === 'activo') ? 'inactivo' : 'activo';

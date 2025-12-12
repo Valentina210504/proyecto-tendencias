@@ -33,10 +33,9 @@ class RutaRequest extends FormRequest
             ];
         }
 
-        // Actualizar
-        // Actualizar
+     
         if ($this->isMethod('put') || $this->isMethod('patch')) {
-            // Intentar obtener el parámetro 'ruta' o cualquiera disponible en la ruta
+            
             $ruta = $this->route('ruta');
             
             if (!$ruta && count($this->route()->parameters()) > 0) {

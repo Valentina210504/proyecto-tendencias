@@ -31,7 +31,7 @@ class EmpresaRequest extends FormRequest
                 'estado' => 'required|boolean'
             ];
         } elseif (request()->isMethod('put') || request()->isMethod('patch')) {
-            // Intentar obtener el parámetro 'empresa' o cualquiera disponible en la ruta
+            
             $empresa = $this->route('empresa');
             
             if (!$empresa && count($this->route()->parameters()) > 0) {
@@ -47,7 +47,7 @@ class EmpresaRequest extends FormRequest
                 'telefono' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
                 'registrado_por' => 'sometimes|string|max:255',
-                // 'estado' se hace opcional o sometimes para evitar errores si no se envía
+                
                 'estado' => 'sometimes|boolean' 
             ];
         }

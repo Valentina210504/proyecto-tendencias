@@ -27,7 +27,7 @@ class Tipo_VehiculoController extends Controller
         try {
             $data = $request->all();
             
-            // Manejar la subida de imagen
+           
             if ($request->hasFile('imagen')) {
                 $imagen = $request->file('imagen');
                 $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
@@ -81,9 +81,9 @@ class Tipo_VehiculoController extends Controller
             $tipo_vehiculo = Tipo_Vehiculo::findOrFail($id);
             $data = $request->all();
             
-            // Manejar la subida de imagen
+            
             if ($request->hasFile('imagen')) {
-                // Eliminar imagen anterior si existe
+
                 if ($tipo_vehiculo->imagen && file_exists(public_path($tipo_vehiculo->imagen))) {
                     unlink(public_path($tipo_vehiculo->imagen));
                 }

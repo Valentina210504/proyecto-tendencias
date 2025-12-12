@@ -52,20 +52,22 @@
                                     <label>Vehículo <strong style="color:red;">(*)</strong></label>
                                     <div class="d-flex align-items-center">
                                         <div id="vehiculoImagePreview" class="mr-3" style="display: none;">
-                                            <img id="vehiculoImagen" src="" alt="Vehículo" 
-                                                 style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                            <img id="vehiculoImagen" src="" alt="Vehículo"
+                                                style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                         </div>
                                         <div id="vehiculoIconDefault" class="mr-3">
-                                            <div style="width: 60px; height: 60px; border-radius: 8px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                            <div
+                                                style="width: 60px; height: 60px; border-radius: 8px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                                 <i class="fas fa-car"></i>
                                             </div>
                                         </div>
                                         <select name="vehiculo_id" id="vehiculoSelect" class="form-control" required>
                                             <option value="">Seleccione</option>
                                             @foreach ($vehiculos as $vehiculo)
-                                            <option value="{{ $vehiculo->id }}" 
-                                                    data-imagen="{{ $vehiculo->imagen ? asset($vehiculo->imagen) : '' }}">
-                                                {{ $vehiculo->placa }} - {{ $vehiculo->marca->nombre ?? '' }} {{ $vehiculo->modelo }}
+                                            <option value="{{ $vehiculo->id }}"
+                                                data-imagen="{{ $vehiculo->imagen ? asset($vehiculo->imagen) : '' }}">
+                                                {{ $vehiculo->placa }} - {{ $vehiculo->marca->nombre ?? '' }}
+                                                {{ $vehiculo->modelo }}
                                             </option>
                                             @endforeach
                                         </select>
@@ -89,7 +91,8 @@
                                     <select name="ruta_id" class="form-control" required>
                                         <option value="">Seleccione</option>
                                         @foreach ($rutas as $ruta)
-                                        <option value="{{ $ruta->id }}" data-precio="{{ $ruta->precio }}">{{ $ruta->nombre_ruta }}</option>
+                                        <option value="{{ $ruta->id }}" data-precio="{{ $ruta->precio }}">
+                                            {{ $ruta->nombre_ruta }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -118,8 +121,9 @@
                                 {{-- COSTO TOTAL --}}
                                 <div class="form-group">
                                     <label>Costo Total del Viaje ($)</label>
-                                    <input type="number" step="0.01" name="costo_total" id="costo_total" class="form-control"
-                                        placeholder="total viaje" value="{{ old('costo_total') }}" readonly required>
+                                    <input type="number" step="0.01" name="costo_total" id="costo_total"
+                                        class="form-control" placeholder="total viaje" value="{{ old('costo_total') }}"
+                                        readonly required>
                                     <small class="form-text text-muted">Costo automático según ruta.</small>
                                 </div>
 
@@ -153,38 +157,38 @@
 
 @section('scripts')
 <script>
-    $(document).ready(function() {
-        // Al cambiar la ruta, actualizar el costo total
-        $('select[name="ruta_id"]').on('change', function() {
-            var selectedOption = $(this).find('option:selected');
-            var precio = selectedOption.data('precio');
-            
-            if (precio) {
-                $('#costo_total').val(precio).prop('readonly', true);
-            } else {
-                $('#costo_total').val('').prop('readonly', false);
-            }
-        });
+$(document).ready(function() {
+
+    $('select[name="ruta_id"]').on('change', function() {
+        var selectedOption = $(this).find('option:selected');
+        var precio = selectedOption.data('precio');
+
+        if (precio) {
+            $('#costo_total').val(precio).prop('readonly', true);
+        } else {
+            $('#costo_total').val('').prop('readonly', false);
+        }
     });
+});
 </script>
 @endsection
 
 @push('scripts')
 <script>
-    $(document).ready(function() {
-        $('#vehiculoSelect').on('change', function() {
-            var selectedOption = $(this).find('option:selected');
-            var imagen = selectedOption.data('imagen');
-            
-            if (imagen) {
-                $('#vehiculoImagen').attr('src', imagen);
-                $('#vehiculoImagePreview').show();
-                $('#vehiculoIconDefault').hide();
-            } else {
-                $('#vehiculoImagePreview').hide();
-                $('#vehiculoIconDefault').show();
-            }
-        });
+$(document).ready(function() {
+    $('#vehiculoSelect').on('change', function() {
+        var selectedOption = $(this).find('option:selected');
+        var imagen = selectedOption.data('imagen');
+
+        if (imagen) {
+            $('#vehiculoImagen').attr('src', imagen);
+            $('#vehiculoImagePreview').show();
+            $('#vehiculoIconDefault').hide();
+        } else {
+            $('#vehiculoImagePreview').hide();
+            $('#vehiculoIconDefault').show();
+        }
     });
+});
 </script>
 @endpush

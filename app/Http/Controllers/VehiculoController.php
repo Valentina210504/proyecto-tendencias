@@ -35,7 +35,7 @@ class VehiculoController extends Controller
             Log::info('Has File "imagen"?: ' . ($request->hasFile('imagen') ? 'Yes' : 'No'));
             Log::info('$_FILES: ' . json_encode($_FILES));
             
-            // Manejar la subida de imagen
+     
             if ($request->hasFile('imagen')) {
                 $imagen = $request->file('imagen');
                 $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
@@ -93,7 +93,7 @@ class VehiculoController extends Controller
             $data = $request->all();
 
             if ($request->hasFile('imagen')) {
-                // Eliminar imagen anterior si existe
+               
                 if ($vehiculo->imagen && file_exists(public_path($vehiculo->imagen))) {
                     unlink(public_path($vehiculo->imagen));
                 }

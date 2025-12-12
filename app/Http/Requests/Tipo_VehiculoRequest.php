@@ -19,7 +19,7 @@ class Tipo_VehiculoRequest extends FormRequest
      */
     public function rules(): array
     {
-        // CREATE
+       
         if ($this->isMethod('post')) {
 
             return [
@@ -33,10 +33,10 @@ class Tipo_VehiculoRequest extends FormRequest
             ];
         }
 
-        // UPDATE
+       
         if ($this->isMethod('put') || $this->isMethod('patch')) {
 
-            // Intentar obtener el parámetro 'tipo_vehiculo' o cualquiera disponible en la ruta
+            
             $tipo_vehiculo = $this->route('tipo_vehiculo');
             
             if (!$tipo_vehiculo && count($this->route()->parameters()) > 0) {

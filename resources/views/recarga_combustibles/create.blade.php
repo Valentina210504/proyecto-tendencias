@@ -81,13 +81,14 @@
                                                     style="color:red;">(*)</strong></label>
                                             <div class="d-flex align-items-center">
                                                 <div id="estacionIconPreview" class="mr-3">
-                                                    <div id="estacionIconBox" style="width: 50px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #ef4444 0%, #ef4444dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                    <div id="estacionIconBox"
+                                                        style="width: 50px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #ef4444 0%, #ef4444dd 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                                         <i class="fas fa-gas-pump"></i>
                                                     </div>
                                                 </div>
-                                                <input type="text" class="form-control" name="estacion_servicio" id="estacionServicio"
-                                                    placeholder="Ejemplo: Shell Zona Norte" autocomplete="off"
-                                                    value="{{ old('estacion_servicio') }}" required>
+                                                <input type="text" class="form-control" name="estacion_servicio"
+                                                    id="estacionServicio" placeholder="Ejemplo: Shell Zona Norte"
+                                                    autocomplete="off" value="{{ old('estacion_servicio') }}" required>
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +121,6 @@
 
 @push('scripts')
 <script>
-// Calcular automáticamente el costo total
 document.addEventListener('DOMContentLoaded', function() {
     const cantidadLitros = document.querySelector('input[name="cantidad_litros"]');
     const precioLitro = document.querySelector('input[name="precio_litro"]');
@@ -135,16 +135,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     cantidadLitros.addEventListener('input', calcularTotal);
     precioLitro.addEventListener('input', calcularTotal);
-    
-    // Cambiar color del ícono de estación
+
+
     var colors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899'];
     var estacionInput = document.getElementById('estacionServicio');
-    
+
     estacionInput.addEventListener('input', function() {
         var nombre = this.value;
         var colorIndex = nombre.length > 0 ? nombre.charCodeAt(0) % colors.length : 0;
         var bgColor = colors[colorIndex];
-        document.getElementById('estacionIconBox').style.background = 'linear-gradient(135deg, ' + bgColor + ' 0%, ' + bgColor + 'dd 100%)';
+        document.getElementById('estacionIconBox').style.background = 'linear-gradient(135deg, ' +
+            bgColor + ' 0%, ' + bgColor + 'dd 100%)';
     });
 });
 </script>

@@ -26,12 +26,12 @@ class RutaController extends Controller
     public function store(RutaRequest $request)
     {
         try {
-            // Asignación manual para evitar que cambien estado o registrado_por desde el form
+            
             $data = $request->all();
             $data['estado'] = 'activo';
             $data['registrado_por'] = Auth::user()->name;
             
-            // Manejar la subida de imagen
+            
             if ($request->hasFile('imagen')) {
                 $imagen = $request->file('imagen');
                 $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
@@ -66,7 +66,7 @@ class RutaController extends Controller
 
         return response()->json([
             'success' => true,
-            'nuevo_estado' => $ruta->estado === 'activo'  // ← Devuelve booleano
+            'nuevo_estado' => $ruta->estado === 'activo'  
         ]);
     }
 
@@ -87,11 +87,11 @@ class RutaController extends Controller
             $ruta = Ruta::findOrFail($id);
             
             $data = $request->all();
-            unset($data['estado'], $data['registrado_por']); // nunca se deben editar
+            unset($data['estado'], $data['registrado_por']); 
             
-            // Manejar la subida de imagen
+            
             if ($request->hasFile('imagen')) {
-                // Eliminar imagen anterior si existe
+                
                 if ($ruta->imagen && file_exists(public_path($ruta->imagen))) {
                     unlink(public_path($ruta->imagen));
                 }

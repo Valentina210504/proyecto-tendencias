@@ -14,9 +14,7 @@ class ConductorRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Reglas de validación para la creación y actualización de conductores.
-     */
+
     public function rules(): array
     {
         if ($this->isMethod('post')) {
@@ -29,11 +27,9 @@ class ConductorRequest extends FormRequest
                 'registrado_por' => 'required|string|max:255',
 
             ];
-        } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
-            // Intentar obtener el parámetro 'conductor' o 'conductore' (Laravel a veces singulariza así)
+        } elseif ($this->isMethod('put') || $this->isMethod('patch')) {     
             $conductor = $this->route('conductor') ?? $this->route('conductore');
             
-            // Si sigue siendo null, intentar obtener el primer parámetro disponible
             if (!$conductor && count($this->route()->parameters()) > 0) {
                 $conductor = reset($this->route()->parameters());
             }
@@ -45,16 +41,12 @@ class ConductorRequest extends FormRequest
                 'apellido' => 'required|string|max:255',
                 'documento' => 'required|string|max:20|unique:conductores,documento,' . $id,
                 'fecha_contrato' => 'nullable|date',
-                // 'estado' se elimina de la validación de actualización
                 'registrado_por' => 'sometimes|string|max:255', 
             ];
         }
     }
 
 
-    /**
-     * Mensajes personalizados para los errores de validación.
-     */
     public function messages(): array
     {
         return [

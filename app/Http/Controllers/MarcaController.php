@@ -26,7 +26,7 @@ class MarcaController extends Controller
     {
         $data = $request->all();
         
-        // Manejar la imagen
+    
         if ($request->hasFile('imagen')) {
             $imagen = $request->file('imagen');
             $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
@@ -73,9 +73,9 @@ class MarcaController extends Controller
             $marca = Marca::findOrFail($id);
             $data = $request->all();
             
-            // Manejar la subida de imagen
+        
             if ($request->hasFile('imagen')) {
-                // Eliminar imagen anterior si existe
+               
                 if ($marca->imagen && file_exists(public_path($marca->imagen))) {
                     unlink(public_path($marca->imagen));
                 }

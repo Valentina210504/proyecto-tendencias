@@ -282,13 +282,13 @@
 </head>
 
 <body>
-    <!-- Fondo con imagen animada -->
+
     <div class="background-image"></div>
     <div class="overlay"></div>
 
     <div class="hero-section">
         <div class="main-container">
-            <!-- Sección Izquierda -->
+
             <div class="left-section">
                 <div class="logo-container">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -314,7 +314,7 @@
                 </p>
             </div>
 
-            <!-- Sección Derecha -->
+
             <div class="right-section">
                 <div class="auth-buttons">
                     @if (Route::has('login'))

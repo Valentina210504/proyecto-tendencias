@@ -26,7 +26,7 @@ class ConductorController extends Controller
     {
         $data = $request->all();
         
-        // Manejar la imagen
+        
         if ($request->hasFile('imagen')) {
             $imagen = $request->file('imagen');
             $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
@@ -73,9 +73,9 @@ class ConductorController extends Controller
             $conductor = Conductor::findOrFail($id);
             $data = $request->all();
             
-            // Manejar la imagen
+            
             if ($request->hasFile('imagen')) {
-                // Eliminar imagen anterior si existe
+                
                 if ($conductor->imagen && file_exists(public_path($conductor->imagen))) {
                     unlink(public_path($conductor->imagen));
                 }

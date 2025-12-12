@@ -27,7 +27,8 @@
                             </h3>
                         </div>
 
-                        <form action="{{ route('recarga_combustibles.update', $recarga_combustible->id) }}" method="POST">
+                        <form action="{{ route('recarga_combustibles.update', $recarga_combustible->id) }}"
+                            method="POST">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -72,7 +73,8 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <input type="hidden" class="form-control" name="estado" value="{{ old('estado', $recarga_combustible->estado ? 1 : 0) }}">
+                                    <input type="hidden" class="form-control" name="estado"
+                                        value="{{ old('estado', $recarga_combustible->estado ? 1 : 0) }}">
                                     <input type="hidden" class="form-control" name="registrado_por"
                                         value="{{ $recarga_combustible->registrado_por }}">
 
@@ -108,8 +110,8 @@
                                             <input type="number"
                                                 class="form-control @error('cantidad_litros') is-invalid @enderror"
                                                 name="cantidad_litros" id="cantidad_litros"
-                                                value="{{ old('cantidad_litros', $recarga_combustible->cantidad_litros) }}" placeholder="0.00" step="0.01"
-                                                min="0" required>
+                                                value="{{ old('cantidad_litros', $recarga_combustible->cantidad_litros) }}"
+                                                placeholder="0.00" step="0.01" min="0" required>
                                             @error('cantidad_litros')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -127,7 +129,8 @@
                                             </label>
                                             <input type="number"
                                                 class="form-control @error('precio_litro') is-invalid @enderror"
-                                                name="precio_litro" id="precio_litro" value="{{ old('precio_litro', $recarga_combustible->precio_litro) }}"
+                                                name="precio_litro" id="precio_litro"
+                                                value="{{ old('precio_litro', $recarga_combustible->precio_litro) }}"
                                                 placeholder="0.00" step="0.01" min="0" required>
                                             @error('precio_litro')
                                             <span class="invalid-feedback" role="alert">
@@ -146,7 +149,8 @@
                                             </label>
                                             <input type="number"
                                                 class="form-control @error('costo_total') is-invalid @enderror"
-                                                name="costo_total" id="costo_total" value="{{ old('costo_total', $recarga_combustible->costo_total) }}"
+                                                name="costo_total" id="costo_total"
+                                                value="{{ old('costo_total', $recarga_combustible->costo_total) }}"
                                                 placeholder="0.00" step="0.01" min="0" readonly required>
                                             @error('costo_total')
                                             <span class="invalid-feedback" role="alert">
@@ -192,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const precioInput = document.getElementById('precio_litro');
     const costoTotalInput = document.getElementById('costo_total');
 
-    // Función para calcular el costo total
+
     function calcularCostoTotal() {
         const cantidad = parseFloat(cantidadInput.value) || 0;
         const precio = parseFloat(precioInput.value) || 0;
@@ -200,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
         costoTotalInput.value = total.toFixed(2);
     }
 
-    // Agregar eventos para calcular automáticamente
+
     cantidadInput.addEventListener('input', calcularCostoTotal);
     precioInput.addEventListener('input', calcularCostoTotal);
 });
